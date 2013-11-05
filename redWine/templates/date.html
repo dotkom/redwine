@@ -1,0 +1,72 @@
+
+<html version="-//W3C//DTD XHTML 1.1//EN" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>Lumikide</title>  
+        <link rel="icon" type="image/png" href="favicon.png"/>
+        <style type="text/css">
+
+            @font-face {
+              font-family: 'Poiret One';
+              font-style: normal;
+              font-weight: 400;
+              src: local('Poiret One'), local('PoiretOne-Regular'), url(font.woff) format('woff');
+            }
+
+            .title, a{
+                font-family: "Poiret One";
+                font-size:  200px;
+                color: white;
+                text-decoration: none;
+                text-shadow: 0px 0px 12px rgba(50, 50, 50, 0.7);
+                transition: all .20s ease-in-out; -moz-transition: all.20s ease-in-out; -webkit-transition: all .20s ease-in-out;
+            }
+
+            a:hover{
+                text-shadow: 0px 0px 29px rgba(0, 0, 0, 1);
+            }
+
+            a{
+                
+                font-size:  70px;
+            }
+
+            .button{display:block;width:80px;height:80px;border-radius:40px;font-size:20px;color:#fff;line-height:100px;text-align:center;}
+
+            body {
+                animation: fadein 1s;
+                -moz-animation: fadein 1s;
+                -webkit-animation: fadein 1s;
+                -o-animation: fadein 1s;
+                background: black url(lumx.png) no-repeat left bottom;  
+            }
+
+            table {
+                border:0;
+                border-spacing: 0px;
+                width: 100%;
+                height: 100%;
+            }
+            hr{
+                border: 0;
+                height: 2px;    
+            }
+            @keyframes fadein {from { opacity:0;} to { opacity:1;}}
+            @-moz-keyframes fadein {from {opacity:0;} to {opacity:1;}}
+            @-webkit-keyframes fadein {from { opacity:0;} to { opacity:1; }}
+            @-o-keyframes fadein {from { opacity:0; } to {opacity: 1;}}
+
+            
+
+        </style>
+    </head>
+    <body>
+        <table><tr><td >
+            <center>
+                <div class="title">
+                {{ current_date }}
+                </div>
+                
+            </center>
+        </table></tr></td>
+    </body>
+</html>
