@@ -4,7 +4,7 @@ from redWine.views import home, hello, dateTime, hours_ahead
 #admin.autodiscover()
 
 urlpatterns = patterns('',
-    url (r'$', home),
+    url (r'^$', home),
     url(r'^hello/$', hello),
     url(r'^date/$', dateTime),
     url(r'^time/plus/(\d{1,2})/$', hours_ahead),
