@@ -1,13 +1,10 @@
 from django.conf.urls import patterns, include, url
-from redWine.views import home, hello, dateTime, hours_ahead
+from redWine.views import home
 #from django.contrib import admin
 #admin.autodiscover()
 
 urlpatterns = patterns('',
     url (r'^$', home),
-    url(r'^hello/$', hello),
-    url(r'^date/$', dateTime),
-    url(r'^time/plus/(\d{1,2})/$', hours_ahead),
     # Examples:
     # url(r'^$', 'vinstraff.views.home', name='home'),
     # url(r'^vinstraff/', include('vinstraff.foo.urls')),
