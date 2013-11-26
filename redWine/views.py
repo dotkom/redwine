@@ -3,6 +3,9 @@ from django.template.loader import get_template
 from django.template import Context
 import datetime
 
+def home(request):
+    return HttpResponse("<h1>Velkommen til redWine - Vinstraff systemet til dotkom</h1>")
+
 def hello(request):
     return HttpResponse("Hello world")
 
