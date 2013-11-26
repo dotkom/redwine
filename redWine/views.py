@@ -5,4 +5,4 @@ from django.shortcuts import render, get_object_or_404, redirect
 import datetime
 
 def home(request):
-    return render(request, 'base.html', {'test' : 1})
+    return render(request, 'index.html', {'test' : 1})
