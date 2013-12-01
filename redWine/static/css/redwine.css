@@ -17,3 +17,14 @@ tr:hover{
 a {
   color: #333;
  }
+
+ .panel-heading{
+    font-weight: bold;
+ }
+ .hiddenRow {
+    padding: 0 !important;
+}
+
+.addNew{
+    float: right;
+}

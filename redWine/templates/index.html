@@ -6,26 +6,33 @@ RedWine
 
 {% block content %}
 
-<div class="panel panel-default">
+<div class="panel panel-default" id="accordion">
   <div class="panel-heading">Vinstraffer</div>
   <table class="table">
-    <tr>
+    <tr data-toggle="collapse" data-target="#1" data-parent="#accordion" class="accordion-toggle">
         <td>Nicolas Asfadgari Mifadutti</td>
         <td title="4"><span class="wine"></span><span class="wine"></span><span class="wine"></span><span class="wine"></span></td>
         <td><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
     </tr>
-    
-    <tr>
+    <tr><td colspan="3" class="hiddenRow"><div class="accordian-body collapse elementInfo" id="1">
+        <a href="#" class="btn btn-success addNew"><span class="glyphicon glyphicon-plus"></span> Ny Vinstraff</a>
+    </div></td></tr>
+    <tr data-toggle="collapse" data-target="#2" data-parent="#accordion" class="accordion-toggle">
         <td>Rikke Tuttifrutti Okipokki</td>
         <td title="3"><span class="wine"></span><span class="wine"></span><span class="wine"></span></td>
         <td><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
     </tr>
-
-    <tr>
+    <tr><td colspan="3" class="hiddenRow"><div class="accordian-body collapse elementInfo" id="2">
+        <a href="#" class="btn btn-success addNew"><span class="glyphicon glyphicon-plus"></span> Ny Vinstraff</a>
+    </div></td></tr>
+    <tr data-toggle="collapse" data-target="#3" data-parent="#accordion" class="accordion-toggle">
         <td>Magnus Gataturri Futtiputti</td>
         <td title="2"><span class="wine"></span><span class="wine"></span></td>
         <td><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
     </tr>
+    <tr><td colspan="3" class="hiddenRow"><div class="accordian-body collapse elementInfo" id="3">
+        <a href="#" class="btn btn-success addNew"><span class="glyphicon glyphicon-plus"></span> Ny Vinstraff</a>
+    </div></td></tr>
 
   </table>
 </div>
