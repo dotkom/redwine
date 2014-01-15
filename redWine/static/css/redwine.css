@@ -27,12 +27,33 @@ a {
 
 .addNew{
     float: right;
+    margin-top: 15px;
+
 }
 
 .center{
     text-align: center;
 }
 
+.left{
+    text-align: left;
+}
+
 .nameCell{
     padding: 12px 8px 8px 8px !important;
+}
+
+.noMargin{margin: 0;}
+
+blockquote{
+    margin:0 -15px 0;
+    border-left: none;
+}
+
+.elementInfo{
+    border-left: 5px solid #eeeeee;
+}
+
+.glyphicon{
+    line-height: 150%;
 }
