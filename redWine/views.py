@@ -10,7 +10,7 @@ def home(request):
     return render(request, 'index.html', {  
         'username' : 'Nicolas Tester',
         'wines' : wines,
-        'wineList' : range(3),
+        'wineList' : range(wines),
         'wineString' : str(wines),
         'isAdmin' : True,
         'name' : 'Nicolas Mifadutti Poppy',

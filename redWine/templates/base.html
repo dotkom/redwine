@@ -20,9 +20,9 @@
         <div class="container">
           <a class="navbar-brand" href="indextest">RedWine</a>
             <ul class="nav navbar-nav navbar-right">
-              {%if isAdmin %}<li><a href="admintest">Admin</a></li>{% endif %}
-              <li><a href="#">Bruker: {{ username }}</a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-user" style="padding-right:17px;"></span>  {{ username }}</a></li>
               <li><a href="#">Vinstraffer: <span style="color:#B92E2E;"> {{ wines }} </span></a></li>
+              {%if isAdmin %}<li><a href="admintest">Admin</a></li>{% endif %}
             </ul>
         </div>
       </div>
