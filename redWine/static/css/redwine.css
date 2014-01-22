@@ -57,3 +57,11 @@ blockquote{
 .glyphicon{
     line-height: 150%;
 }
+.form-control {
+    display: inline-block;
+    width: 300px;
+}
+#select-control {
+    display: inline-block;
+    width: 60px;
+}

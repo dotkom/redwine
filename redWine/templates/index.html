@@ -42,8 +42,8 @@ RedWine
                     <form class="form-inline addNew" role="form">
                       <div class="form-group">
                         <label class="sr-only" for="exampleInputEmail2">Ny Begrunnelse</label>
-                        <input type="text" style="width:300px;" class="form-control" id="reason" placeholder="Begrunnelse">
-                        <select class="form-control" style="width:60px;">
+                        <input type="text" class="form-control" id="reason" placeholder="Begrunnelse">
+                        <select class="form-control" id="select-control">
                         {% for num in "0123456789"%}
                         <option{%ifequal num wineString %} selected {% endifequal %}>{{ num }}</option>
                         {%endfor%}
