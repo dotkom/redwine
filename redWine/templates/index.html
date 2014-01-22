@@ -15,26 +15,27 @@ RedWine
         <td><strong>Tid</strong></td>
         <td></td>
     </tr>
-    <tr data-toggle="collapse" data-target="#1" data-parent="#accordion" class="accordion-toggle center">
-        <td class="nameCell left">Nicolas Asfadgari Mifadutti</td>
-        <td title="4" class="nameCell   ">
+
+    {%for straff in wineList %}
+    <tr data-toggle="collapse" data-target="#{{straff}}" data-parent="#accordion" class="accordion-toggle center">
+        <td class="nameCell left">{{ name }}</td>
+        <td title="{{ vinstraffer }}" class="nameCell">
+            {% for vin in wineList %}
             <span class="wine"></span>
-            <span class="wine"></span>
-            <span class="wine"></span>
-            <span class="wine"></span>
+            {% endfor %}
         </td>
-        <td class="nameCell">2014-01-15 13:37</td>
+        <td class="nameCell">{{ time }}</td>
         <td><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
     </tr>
     <tr>
         <td colspan="4" class="hiddenRow">
-            <div class="accordian-body collapse elementInfo" id="1">
+            <div class="accordian-body collapse elementInfo" id="{{straff}}">
                 <div class="row noMargin">
                   <div class="col-md-6">
 
                     <blockquote>
-                    <p>XO rebootet ikke etter strømbrudd, la ikke inn dato på kurs.</p>
-                    <small>Gitt av <cite title="Source Title">Anonymous</cite></small>
+                    <p>{{ reason }}</p>
+                    <small>Gitt av <cite title="Source Title">{{ author }}</cite></small>
                     </blockquote>
                   </div>
                   <div class="col-md-6">
@@ -43,7 +44,10 @@ RedWine
                         <label class="sr-only" for="exampleInputEmail2">Ny Begrunnelse</label>
                         <input type="text" style="width:300px;" class="form-control" id="reason" placeholder="Begrunnelse">
                         <select class="form-control" style="width:60px;">
-                        <option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option><option>7</option><option>8</option><option>9</option>
+                        {% for num in "0123456789"%}
+                        <option{%ifequal num wineString %} selected {% endifequal %}>{{ num }}</option>
+                        {%endfor%}
+
                         </select>
                       </div>
         
@@ -59,6 +63,7 @@ RedWine
             </div>
         </td>
     </tr>
+    {%endfor%}
 
 </table>
 </div>
