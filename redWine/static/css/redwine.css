@@ -28,7 +28,7 @@ a {
 .addNew{
     float: right;
     margin-top: 15px;
-
+    width: 100%;
 }
 
 .center{
@@ -59,9 +59,25 @@ blockquote{
 }
 .form-control {
     display: inline-block;
-    width: 300px;
+    width: 800px;
 }
 #select-control {
     display: inline-block;
     width: 60px;
+}
+.newCol{
+    padding-right: 15px;
+    float: right;
+}
+hr{
+    margin: 0px;
+}
+.col-sm-2{
+    padding-top: 20px !important;
+}
+.minCell{
+    padding-top: 25px !important;
+}
+.rightFloat{
+    float:right;
 }

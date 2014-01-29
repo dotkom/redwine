@@ -30,33 +30,54 @@ RedWine
     <tr>
         <td colspan="4" class="hiddenRow">
             <div class="accordian-body collapse elementInfo" id="{{straff}}">
-                <div class="row noMargin">
-                  <div class="col-md-6">
 
+                <div class="row noMargin">
+                  <div class="newCol">
+                    <form class="form-inline addNew" role="form">
+                      <div class="form-group">
+                        <label class="sr-only" for="exampleInputEmail2">Ny Vinstraff</label>
+                        <input type="text" class="form-control" id="reason" placeholder="Begrunnelse på ny vinstraff">
+                        <select class="form-control" id="select-control">
+                        {% for num in "123456789"%}
+                        <option{%ifequal num wineString %} nosel {% endifequal %}>{{ num }}</option>
+                        {%endfor%}
+
+                        </select>
+                      </div>
+                      <button type="submit" class="btn btn-success" title="Ny Vinstraff">
+                      <span class="glyphicon glyphicon-plus"></span></button>
+                    </div>
+                  </div>
+
+                  <div class="row noMargin">
+                  <hr>
+                  <div class="col-md-6">
                     <blockquote>
                     <p>{{ reason }}</p>
                     <small>Gitt av <cite title="Source Title">{{ author }}</cite></small>
                     </blockquote>
                   </div>
-                  <div class="col-md-6">
-                    <form class="form-inline addNew" role="form">
-                      <div class="form-group">
-                        <label class="sr-only" for="exampleInputEmail2">Ny Begrunnelse</label>
-                        <input type="text" class="form-control" id="reason" placeholder="Begrunnelse">
-                        <select class="form-control" id="select-control">
-                        {% for num in "0123456789"%}
-                        <option{%ifequal num wineString %} selected {% endifequal %}>{{ num }}</option>
-                        {%endfor%}
 
-                        </select>
-                      </div>
-        
-                      <button type="submit" class="btn btn-success" title="Ny Vinstraff">
-                      <span class="glyphicon glyphicon-plus"></span></button>
+                  <div title="{{ wines }} vinstraffer." class="col-sm-2 nameCell">
+                        {% for vin in wineList %}
+                        <span class="wine"></span>
+                        {% endfor %}
+                    </div>
+
+                    <div title="Vinstraff gitt {{ time }}" class="col-sm-2 nameCell minCell">
+                          {{time}}
+                    </div>
+
+                  <div class="col-sm-2">
+                    <span class="rightFloat">
                       <button type="submit" class="btn btn-warning" title="Endre">
-                      <span class="glyphicon glyphicon-pencil"></span></button>
+                      <span class="glyphicon glyphicon-pencil bbt"></span></button>
                       <button type="submit" class="btn btn-danger" title="Slett">
                       <span class="glyphicon glyphicon-ban-circle"></span></button>
+                    </span>
+                  </div>
+                  </div>
+        
                     </form>
                 </div> 
                 
