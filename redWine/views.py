@@ -3,18 +3,13 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from django.template import Context
 from django.shortcuts import render, get_object_or_404, redirect
+from .models import Bruker, Straff
 import datetime
 
 def home(request):
     wines=6
+    straffer=Straff.objects.all()
+    brukere=Bruker.objects.all()
     return render(request, 'index.html', {  
-        'username' : 'Nicolas Tester',
-        'wines' : wines,
-        'wineList' : range(wines),
-        'wineString' : str(wines),
-        'isAdmin' : True,
-        'name' : 'Nicolas Mifadutti Poppy',
-        'time' : '2014-01-15 13:37',
-        'author' : 'Nils',
-        'reason' : 'Spiste for mye pizza og sendte ikke nok pupper på snap.'
+        'brukere' : brukere,
         })

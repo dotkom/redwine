@@ -4,6 +4,8 @@
 RedWine
 {% endblock title %}
 
+{% load filters %}
+
 {% block content %}
 
 <div class="panel panel-default" id="accordion">
@@ -16,56 +18,58 @@ RedWine
         <td></td>
     </tr>
 
-    {%for straff in wineList %}
-    <tr data-toggle="collapse" data-target="#{{straff}}" data-parent="#accordion" class="accordion-toggle center">
-        <td class="nameCell left">{{ name }}</td>
-        <td title="{{ wines }} vinstraffer." class="nameCell">
-            {% for vin in wineList %}
+    {%for user in brukere %}
+    <tr data-toggle="collapse" data-target="#{{forloop.counter}}" data-parent="#accordion" class="accordion-toggle center">
+        <td class="nameCell left">{{ user.name }}</td>
+        <td title="{{ user.total }} vinstraffer." class="nameCell">
+            {% for vin in user.total|get_range %}
             <span class="wine"></span>
             {% endfor %}
         </td>
-        <td class="nameCell">{{ time }}</td>
+        <td class="nameCell">{{ user.registered }}</td>
         <td><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
     </tr>
     <tr>
         <td colspan="4" class="hiddenRow">
-            <div class="accordian-body collapse elementInfo" id="{{straff}}">
+            <div class="accordian-body collapse elementInfo" id="{{forloop.counter}}">
 
                 <div class="row noMargin">
                   <div class="newCol">
-                    <form class="form-inline addNew" role="form">
+                    <form class="form-inline addNew" role="form" action="/" method="post">
+                    {% csrf_token %}
                       <div class="form-group">
                         <label class="sr-only" for="exampleInputEmail2">Ny Vinstraff</label>
-                        <input type="text" class="form-control" id="reason" placeholder="Begrunnelse på ny vinstraff">
-                        <select class="form-control" id="select-control">
+                        <input type="text" class="form-control" id="reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
+                        <select class="form-control" id="select-control" name="amount">
                         {% for num in "123456789"%}
                         <option{%ifequal num wineString %} nosel {% endifequal %}>{{ num }}</option>
                         {%endfor%}
-
                         </select>
+
                       </div>
+
                       <button type="submit" class="btn btn-success" title="Ny Vinstraff">
                       <span class="glyphicon glyphicon-plus"></span></button>
                     </div>
                   </div>
-
+                  {%for straff in user.straffer.all %}
                   <div class="row noMargin">
                   <hr>
                   <div class="col-md-6">
                     <blockquote>
-                    <p>{{ reason }}</p>
-                    <small>Gitt av <cite title="Source Title">{{ author }}</cite></small>
+                    <p>{{ straff.reason }}</p>
+                    <small>Gitt av <cite title="Source Title">{{ straff.giver }}</cite></small>
                     </blockquote>
                   </div>
 
-                  <div title="{{ wines }} vinstraffer." class="col-sm-2 nameCell">
-                        {% for vin in wineList %}
+                  <div title="{{ straff.amount }} vinstraffer." class="col-sm-2 nameCell">
+                        {% for vin in straff.amount|get_range %}
                         <span class="wine"></span>
                         {% endfor %}
                     </div>
 
-                    <div title="Vinstraff gitt {{ time }}" class="col-sm-2 nameCell minCell">
-                          {{time}}
+                    <div title="Vinstraff gitt {{ straff.date }}" class="col-sm-2 nameCell minCell">
+                          {{straff.date}}
                     </div>
 
                   <div class="col-sm-2">
@@ -79,9 +83,10 @@ RedWine
                   </div>
         
                     </form>
+                    {% endfor %}
                 </div> 
-                
             </div>
+                
         </td>
     </tr>
     {%endfor%}

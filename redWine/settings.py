@@ -130,6 +130,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
+#TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.request','django.contrib.auth.context_processors.auth',)
+
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 # A sample logging configuration. The only tangible logging
