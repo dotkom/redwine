@@ -24,3 +24,5 @@ class Straff(models.Model):
     date = models.DateTimeField(auto_now=True)
     def __unicode__(self):
         return u'%s - %s' % (self.amount, self.to)
+    class Meta:
+        get_latest_by = 'date'
