@@ -17,16 +17,18 @@ RedWine
         <td><strong>Sist straffet</strong></td>
         <td></td>
     </tr>
-
-    {%for user in users %}
+    
+    {{user.komite}}
+    {%for member in users %}
+    {%ifequal member.komite 'dotKom' %}
     <tr data-toggle="collapse" data-target="#{{forloop.counter}}" data-parent="#accordion" class="accordion-toggle center">
-        <td class="nameCell left">{{ user.user.get_full_name }}</td>
-        <td title="{{ user.total }} vinstraffer." class="nameCell">
-            {% for vin in user.total|get_range %}
+        <td class="nameCell left">{{ member.user.get_full_name }}</td>
+        <td title="{{ member.total }} vinstraffer" class="nameCell">
+            {% for vin in member.total|get_range %}
             <span class="wine"></span>
             {% endfor %}
         </td>
-        <td class="nameCell">{{ user.straffer.all.latest.date }}</td>
+        <td class="nameCell">{{ member.straffer.all.latest.date }}</td>
         <td><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
     </tr>
     <tr>
@@ -57,7 +59,7 @@ RedWine
                       <span class="glyphicon glyphicon-plus"></span></button>
                     </div>
                   </div>
-                  {%for straff in user.straffer.all %}
+                  {%for straff in member.straffer.all %}
                   <div class="row noMargin">
                   <hr>
                   <div class="col-md-6">
@@ -72,6 +74,8 @@ RedWine
                         <span class="wine"></span>
                         {% endfor %}
                     </div>
+
+                    <!-- todo: komitéfilter, col- på alle grids, minwith med cols, formshit, leftaligned straffer, input width --> 
 
                     <div title="Vinstraff gitt {{ straff.date }}" class="col-sm-2 nameCell minCell">
                           {{straff.date}}
@@ -88,12 +92,14 @@ RedWine
                   </div>
         
                     </form>
+                    
                     {% endfor %}
                 </div> 
             </div>
                 
         </td>
     </tr>
+    {% endifequal %}
     {%endfor%}
 
 </table>
