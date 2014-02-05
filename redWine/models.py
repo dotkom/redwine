@@ -1,18 +1,24 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
-class Bruker(models.Model):
-    name = models.CharField(max_length=30)
-    admin = models.BooleanField(default=False)
-    registered = models.DateTimeField(auto_now=True)
+class UserProfile(models.Model):  
+    user = models.OneToOneField(User)  
     komite = models.CharField(max_length=30, default='dotKom')
     def total(self):
         return sum([straff.amount for straff in self.straffer.all()])
     def __unicode__(self):
-        return u'%s' % (self.name)
+        return u'%s' % (self.user)
+
+def create_user_profile(sender, instance, created, **kwargs):  
+    if created:  
+       profile, created = UserProfile.objects.get_or_create(user=instance)  
+
+post_save.connect(create_user_profile, sender=User) 
 
 class Straff(models.Model):
-    to = models.ForeignKey(Bruker, related_name='straffer')
-    giver = models.ForeignKey(Bruker, related_name='straffer_gitt')
+    to = models.ForeignKey(UserProfile, related_name='straffer')
+    giver = models.ForeignKey(UserProfile, related_name='straffer_gitt')
     amount = models.PositiveIntegerField()
     reason = models.CharField(max_length=80)
     date = models.DateTimeField(auto_now=True)

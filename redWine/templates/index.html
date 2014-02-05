@@ -18,9 +18,9 @@ RedWine
         <td></td>
     </tr>
 
-    {%for user in brukere %}
+    {%for user in users %}
     <tr data-toggle="collapse" data-target="#{{forloop.counter}}" data-parent="#accordion" class="accordion-toggle center">
-        <td class="nameCell left">{{ user.name }}</td>
+        <td class="nameCell left">{{ user.user.get_full_name }}</td>
         <td title="{{ user.total }} vinstraffer." class="nameCell">
             {% for vin in user.total|get_range %}
             <span class="wine"></span>
@@ -35,12 +35,17 @@ RedWine
 
                 <div class="row noMargin">
                   <div class="newCol">
-                    <form class="form-inline addNew" role="form" action="/" method="post">
+                    <form class="form-inline addNew" role="form" action="." method="post">
                     {% csrf_token %}
+                     {{ form.non_field_errors }}
                       <div class="form-group">
                         <label class="sr-only" for="exampleInputEmail2">Ny Vinstraff</label>
+                        {{ form.reason.errors }}
                         <input type="text" class="form-control" id="reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
+                        {{ form.reason }}
+                        {{ form.amount.errors }}
                         <select class="form-control" id="select-control" name="amount">
+                        {{ form.amount }}
                         {% for num in "123456789"%}
                         <option{%ifequal num wineString %} nosel {% endifequal %}>{{ num }}</option>
                         {%endfor%}
