@@ -5,5 +5,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
+    #(r'accounts/login/',include(admin.site.urls)),
     url (r'^$', home),
 )
