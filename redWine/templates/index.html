@@ -12,7 +12,7 @@ RedWine
   <div class="panel-heading">Vinstraffer</div>
   <table class="table">
     <tr class="center">
-        <td class="left"><strong>Navn</strong></td>
+        <td class="left col-md-6"><strong>Navn</strong></td>
         <td><strong>Antall</strong></td>
         <td><strong>Sist straffet</strong></td>
         <td></td>
@@ -22,8 +22,8 @@ RedWine
     {%for member in users %}
     {%ifequal member.komite 'dotKom' %}
     <tr data-toggle="collapse" data-target="#{{forloop.counter}}" data-parent="#accordion" class="accordion-toggle center">
-        <td class="nameCell left">{{ member.user.get_full_name }}</td>
-        <td title="{{ member.total }} vinstraffer" class="nameCell">
+        <td class="nameCell left col-md-6">{{ member.user.get_full_name }}</td>
+        <td title="{{ member.total }} vinstraffer" class="nameCell left">
             {% for vin in member.total|get_range %}
             <span class="wine"></span>
             {% endfor %}
@@ -43,15 +43,14 @@ RedWine
                       <div class="form-group">
                         <label class="sr-only" for="exampleInputEmail2">Ny Vinstraff</label>
                         {{ form.reason.errors }}
-                        <input type="text" class="form-control" id="reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
-                        {{ form.reason }}
+                      <input type="text" class="form-control" id="id_reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
                         {{ form.amount.errors }}
-                        <select class="form-control" id="select-control" name="amount">
-                        {{ form.amount }}
+                        <select class="form-control" id="amount" name="amount">
                         {% for num in "123456789"%}
                         <option{%ifequal num wineString %} nosel {% endifequal %}>{{ num }}</option>
                         {%endfor%}
                         </select>
+                        <input id="id_to" name="to" type="hidden" value="{{ member.user.id }}">
 
                       </div>
 
@@ -69,7 +68,7 @@ RedWine
                     </blockquote>
                   </div>
 
-                  <div title="{{ straff.amount }} vinstraffer." class="col-sm-2 nameCell">
+                  <div title="{{ straff.amount }} vinstraffer." class="col-sm-2 nameCell left">
                         {% for vin in straff.amount|get_range %}
                         <span class="wine"></span>
                         {% endfor %}
