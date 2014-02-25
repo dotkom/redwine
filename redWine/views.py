@@ -13,18 +13,24 @@ from .forms import newPenaltyForm
 def home(request):
     submitted=False
     if request.method == 'POST':
-        form = newPenaltyForm(request.POST)
-        print("hello")
-        if form.is_valid(): #ERRORS HERE
-            submitted=True
-            toUser=UserProfile.objects.get(id=form.cleaned_data['to'])
-            print(toUser)
-            s=Straff(
-                giver=user.username,
-                to=toUser,
-                amount=form.cleaned_data['amount'],
-                reason=form.cleaned_data['reason'])
-            s.save()
+        
+        act=str(request.POST['act'])
+        form = newPenaltyForm(data=request.POST)
+        print(act+"x")
+        if act=='add':
+          print(request.user.id)
+          print(int(form.data['to']))
+          s=Straff(
+                  giver=UserProfile.objects.get(id=(request.user.id-1)),
+                  to=UserProfile.objects.get(id=(int(form.data['to'])-1)),
+                  amount=form.data['amount'],
+                  reason=form.data['reason'])
+          s.save()
+        elif act=='delete':
+          pass
+        
+        elif act=='edit':
+          pass
     else:
         form=newPenaltyForm()
 
@@ -33,5 +39,5 @@ def home(request):
     return render(request, 'index.html', {  
         'users' : users,
         'submittedNew' : submitted,
-        'form' : form,
+        #'form' : form,
         })

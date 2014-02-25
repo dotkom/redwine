@@ -16,9 +16,14 @@ body {
   
   border-color: #B92E2E;
 }
-
+.wine:before {
+  content: url(../img/wine.png);
+  width: 15px;
+  height: 30px;
+  
+}
 .wine{
-    content: url(../img/wine.png);
+    /*background-image: url(../img/wine.png);*/
     height: 30px;
 }
 
