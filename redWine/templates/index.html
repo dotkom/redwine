@@ -7,18 +7,17 @@ RedWine
 {% load filters %}
 
 {% block content %}
-
+<!-- todo: sort by name/last given/total amount -->
 <div class="panel panel-default" id="accordion">
   <div class="panel-heading">Vinstraffer</div>
   <table class="table">
     <tr class="center">
         <td class="left col-md-6"><strong>Navn</strong></td>
-        <td><strong>Antall</strong></td>
+        <td class="left"><strong>Antall</strong></td>
         <td><strong>Sist straffet</strong></td>
         <td></td>
     </tr>
-    
-    {{user.komite}}
+
     {%for member in users %}
     {%ifequal member.komite 'dotKom' %}
     <tr data-toggle="collapse" data-target="#{{forloop.counter}}" data-parent="#accordion" class="accordion-toggle center clickable">
@@ -28,7 +27,7 @@ RedWine
             <img src="/static/img/wine.png" alt="Vin" class="wine">
             {% endfor %}
         </td>
-        <td class="nameCell">{{ member.straffer.all.latest.date }}</td>
+        <td class="nameCell">{{ member.straffer.latest.date }}</td>
         <td><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
     </tr>
     <tr>
@@ -44,7 +43,7 @@ RedWine
                         <div class="col-xs-10">
                         <label class="sr-only" for="exampleInputEmail2">Ny Vinstraff</label>
                         {{ form.reason.errors }}
-                      <input type="text" class="form-control" id="id_reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
+                      <input type="text" maxlength="100" class="form-control" id="id_reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
                           </div>
                         <div class="addBox col-xs-1">
                           {{ form.amount.errors }}
@@ -67,18 +66,16 @@ RedWine
                   <hr>
                   <div class="col-md-6">
                     <blockquote>
-                    <p>{{ straff.reason }}</p>
+                    <p class="breakword">{{ straff.reason }}</p>
                     <small>Gitt av <cite title="Source Title">{{ straff.giver }}</cite></small>
                     </blockquote>
                   </div>
 
-                  <div title="{{ straff.amount }} vinstraffer." class="col-sm-2 nameCell left">
+                  <div title="{{ straff.amount }} vinstraffer." class="col-sm-2 nameCell left noLeftPadd">
                         {% for vin in straff.amount|get_range %}
                         <img src="/static/img/wine.png" alt="Vin" class="wine">
                         {% endfor %}
                     </div>
-
-                    <!-- todo: komitéfilter, col- på alle grids, minwith med cols, formshit, leftaligned straffer, input width --> 
 
                     <div title="Vinstraff gitt {{ straff.date }}" class="col-sm-2 nameCell minCell">
                           {{straff.date}}
@@ -91,10 +88,8 @@ RedWine
                     </span>
                   </div>
                   </div>
-        
-                    </form>
-                    
                     {% endfor %}
+                  </form>
                 </div> 
             </div>
                 

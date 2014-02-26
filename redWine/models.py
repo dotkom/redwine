@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Count
 from django.db.models.signals import post_save
 
 class UserProfile(models.Model):  
@@ -20,9 +21,10 @@ class Straff(models.Model):
     to = models.ForeignKey(UserProfile, related_name='straffer')
     giver = models.ForeignKey(UserProfile, related_name='straffer_gitt')
     amount = models.PositiveIntegerField()
-    reason = models.CharField(max_length=80)
+    reason = models.CharField(max_length=100)
     date = models.DateTimeField(auto_now=True)
     def __unicode__(self):
         return u'%s - %s' % (self.amount, self.to)
     class Meta:
+        ordering = ['-date']
         get_latest_by = 'date'
