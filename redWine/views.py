@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
+import datetime, re
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.template import Context
@@ -16,18 +16,21 @@ def home(request):
         
         act=str(request.POST['act'])
         form = newPenaltyForm(data=request.POST)
-        print(act+"x")
-        if act=='add':
-          print(request.user.id)
-          print(int(form.data['to']))
+        print(act)
+        if act =='add' and int(form.data['amount'])<=10 and len(form.data['reason'])<85:
+          #todo: sjekk at man gir til samme komite
           s=Straff(
-                  giver=UserProfile.objects.get(id=(request.user.id-1)),
-                  to=UserProfile.objects.get(id=(int(form.data['to'])-1)),
-                  amount=form.data['amount'],
-                  reason=form.data['reason'])
+                  giver=UserProfile.objects.get(user=request.user),
+                  to=UserProfile.objects.get(pk=(int(form.data['to'])-1)),
+                  amount=int(form.data['amount']),
+                  reason=str(form.data['reason'].encode('utf8'))
+                  )
           s.save()
-        elif act=='delete':
-          pass
+          
+        elif 'delete' in act: #todo: sjekk at man ikke sletter sin egen
+          straffen=Straff.objects.get(pk=int(act.split(" ")[1]))
+          if str(straffen.to.user.username) != str(request.user):
+            straffen.delete()
         
         elif act=='edit':
           pass

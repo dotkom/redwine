@@ -21,11 +21,11 @@ RedWine
     {{user.komite}}
     {%for member in users %}
     {%ifequal member.komite 'dotKom' %}
-    <tr data-toggle="collapse" data-target="#{{forloop.counter}}" data-parent="#accordion" class="accordion-toggle center">
+    <tr data-toggle="collapse" data-target="#{{forloop.counter}}" data-parent="#accordion" class="accordion-toggle center clickable">
         <td class="nameCell left col-md-6">{{ member.user.get_full_name }}</td>
         <td title="{{ member.total }} vinstraffer" class="nameCell left">
             {% for vin in member.total|get_range %}
-            <span class="wine"></span>
+            <img src="/static/img/wine.png" alt="Vin" class="wine">
             {% endfor %}
         </td>
         <td class="nameCell">{{ member.straffer.all.latest.date }}</td>
@@ -41,21 +41,25 @@ RedWine
                     {% csrf_token %}
                      {{ form.non_field_errors }}
                       <div class="form-group">
+                        <div class="col-xs-10">
                         <label class="sr-only" for="exampleInputEmail2">Ny Vinstraff</label>
                         {{ form.reason.errors }}
                       <input type="text" class="form-control" id="id_reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
-                        {{ form.amount.errors }}
-                        <select class="form-control" id="amount" name="amount">
+                          </div>
+                        <div class="addBox col-xs-1">
+                          {{ form.amount.errors }}
+                        <select id="select-control" class="form-control" id="amount" name="amount">
                         {% for num in "123456789"%}
                         <option{%ifequal num wineString %} nosel {% endifequal %}>{{ num }}</option>
                         {%endfor%}
                         </select>
                         <input id="id_to" name="to" type="hidden" value="{{ member.user.id }}">
-
+<button type="submit" name="act" class="btn btn-success" title="Ny Vinstraff" value="add">
+                      <span class="glyphicon glyphicon-plus"></span></button>
+                        </div>
                       </div>
 
-                      <button type="submit" name="act" class="btn btn-success" title="Ny Vinstraff" value="add">
-                      <span class="glyphicon glyphicon-plus"></span></button>
+                     
                     </div>
                   </div>
                   {%for straff in member.straffer.all %}
@@ -70,7 +74,7 @@ RedWine
 
                   <div title="{{ straff.amount }} vinstraffer." class="col-sm-2 nameCell left">
                         {% for vin in straff.amount|get_range %}
-                        <span class="wine"></span>
+                        <img src="/static/img/wine.png" alt="Vin" class="wine">
                         {% endfor %}
                     </div>
 
@@ -82,9 +86,7 @@ RedWine
 
                   <div class="col-sm-2">
                     <span class="rightFloat">
-                      <button type="submit" name="act" class="btn btn-warning" title="Endre" value="change">
-                      <span class="glyphicon glyphicon-pencil bbt"></span></button>
-                      <button type="submit" name="act" class="btn btn-danger" title="Slett" value="delete">
+                      <button type="submit" name="act" class="btn btn-danger" title="Slett" value="delete {{ straff.pk }}">
                       <span class="glyphicon glyphicon-ban-circle"></span></button>
                     </span>
                   </div>

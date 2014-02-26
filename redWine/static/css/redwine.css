@@ -10,20 +10,21 @@ body {
 
 
 .navbar-inverse .navbar-brand{
-    color:#B92E2E;
+    color:#722F37;
+    font-size: 30px;
+    text-shadow: 1px 1px 2px #000;
+    -moz-transition: color 1s ease;
+-webkit-transition: color 1s ease;
+-o-transition: color 1s ease;
+transition: color 1s ease;
 }
 .panel-default > .panel-heading {
-  
-  border-color: #B92E2E;
+  font-size: 26px;
+  border-color: #722F37;
 }
-.wine:before {
-  content: url(../img/wine.png);
-  width: 15px;
-  height: 30px;
-  
-}
+
 .wine{
-    /*background-image: url(../img/wine.png);*/
+    content: url(../img/wine.png);
     height: 30px;
 }
 
@@ -72,18 +73,33 @@ blockquote{
 
 .glyphicon{
     line-height: 150%;
+  
 }
+
+
 .form-control {
     display: inline-block;
-    width: 800px;
+    width: 100% !important;
+
 }
-#amount {
+#select-control {
     display: inline-block;
-    width: 60px;
+    width: 58px !important;
 }
+.form-group { 
+  width: 100% !important;
+  display: -webkit-flex;
+}
+
+.addBox{
+  min-width:133px;
+  float: right;
+}
+
 .newCol{
-    padding-right: 15px;
+    /*padding-right: 15px;*/
     float: right;
+    width: 100%;
 }
 hr{
     margin: 0px;
@@ -96,4 +112,34 @@ hr{
 }
 .rightFloat{
     float:right;
+}
+
+tr {
+  background: #fff;
+  -moz-transition: background 0.5s ease;
+-webkit-transition: background 0.5s ease;
+-o-transition: background 0.5s ease;
+transition: background 0.5s ease;
+}
+
+
+.navbar-inverse .navbar-nav > li > a {
+    -moz-transition: color 0.5s ease;
+-webkit-transition: color 0.5s ease;
+-o-transition: color 0.5s ease;
+transition: color 0.5s ease;
+}
+
+@media all and (min-width: 769px) {
+  .nav li a {
+    height: 52px;
+    vertical-align: top; 
+  }
+}
+
+@media all and (max-width: 768px) {
+  .nav li {
+    display: inline-block;
+  }
+
 }
