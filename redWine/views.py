@@ -14,6 +14,7 @@ from .forms import newPenaltyForm
 def home(request):
     submitted=False
     showDeleted=False
+    ownDelete=False
     editedUser=-1
     if request.method == 'POST':
         
@@ -47,6 +48,8 @@ def home(request):
               straffen.deleted=True
               straffen.save()
               editedUser=int(act.split(" ")[1])-1
+            else:
+              ownDelete=True
         
         elif 'showhidden' in act:
           showDeleted=True
@@ -62,5 +65,6 @@ def home(request):
         'submittedNew' : submitted,
         'showDeleted' : showDeleted,
         'editedUser' : editedUser,
+        'ownDelete' : ownDelete,
         #'form' : form,
         })

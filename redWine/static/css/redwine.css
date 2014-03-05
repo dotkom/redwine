@@ -161,6 +161,25 @@ transition: background 0.5s ease;
 -o-transition: color 0.5s ease;
 transition: color 0.5s ease;
 }
+.goNyan{ margin-left: 250% !important;}
+.nyan{
+  height:90%;
+  width: 100%;
+  position: absolute;
+  top: 70px;
+  margin-left: -130%;
+  background: url(/static/img/nyan.gif) no-repeat;
+  -webkit-transition: all 16.9s cubic-bezier(0.370,0.055,0.000,1.000);
+  -moz-transition: all 16s cubic-bezier(0.370,0.055,0.000,1.000);
+  -o-transition: all 16.9s cubic-bezier(0.370,0.055,0.000,1.000);
+  -ms-transition: all 16.9s cubic-bezier(0.370,0.055,0.000,1.000);
+  transition: all 16.9s cubic-bezier(0.370,0.055,0.000,1.000);
+  -webkit-background-size:contain !important;
+  -moz-background-size:contain !important;
+  -o-background-size:contain !important;
+  background-size:contain !important;
+  z-index:10;
+}
 
 @media all and (min-width: 769px) {
   .nav li a {

@@ -7,7 +7,7 @@ RedWine
 {% load filters %}
 
 {% block content %}
-<!-- todo: sort by name/last given/total amount -->
+<div id="nyan" class="nyan">{{ownDelete}}</div>
 <div class="panel panel-default" id="accordion">
   <div class="panel-heading">Vinstraffer</div>
   <table class="table">
@@ -122,4 +122,9 @@ RedWine
 
 </table>
 </div>
+{%if ownDelete %}
+<script>
+   $(document.getElementById("nyan")).toggleClass( "goNyan" ); 
+</script>
+{% endif %}
 {% endblock content %}
