@@ -7,7 +7,14 @@ body {
 }
 
 
-
+.permaButton{
+  color:#FFF;
+  background-color:#999;
+  margin: 10px 20px 10px 15px;
+}
+.permaButton:hover{
+  background-color:#FF0000;
+}
 
 .navbar-inverse .navbar-brand{
     color:#722F37;
@@ -58,6 +65,13 @@ a {
 
 .nameCell{
     padding: 12px 8px 8px 8px !important;
+}
+
+.moreCell{
+    padding: 12px 8px 8px 15px !important;
+}
+.nameCell {
+  max-width: 268px !important;
 }
 
 .noMargin{margin: 0;}

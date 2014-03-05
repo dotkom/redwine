@@ -27,12 +27,12 @@ RedWine
             <img src="/static/img/wine.png" alt="Vin" class="wine">
             {% endfor %}
         </td>
-        <td class="nameCell">{{ member.straffer.latest.date }}</td>
+      <td class="nameCell">{{ member.straffer.latest.date | date:"d M Y H:i" }}</td>
         <td><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
     </tr>
     <tr>
         <td colspan="4" class="hiddenRow">
-            <div class="accordian-body collapse elementInfo" id="{{forloop.counter}}">
+          <div class="accordian-body collapse elementInfo {% ifequal forloop.counter editedUser %}in{% endifequal %}" id="{{forloop.counter}}">
 
                 <div class="row noMargin">
                   <div class="newCol">
@@ -62,11 +62,12 @@ RedWine
                     </div>
                   </div>
                   {%for straff in member.straffer.all %}
+                  {% ifequal straff.deleted showDeleted %}
                   <div class="row noMargin">
                   <hr>
                   <div class="col-md-6">
                     <blockquote>
-                    <p class="breakword">{{ straff.reason }}</p>
+                      <p class="breakword">{{ straff.reason }}</p> 
                     <small>Gitt av <cite title="Source Title">{{ straff.giver }}</cite></small>
                     </blockquote>
                   </div>
@@ -77,18 +78,39 @@ RedWine
                         {% endfor %}
                     </div>
 
-                    <div title="Vinstraff gitt {{ straff.date }}" class="col-sm-2 nameCell minCell">
-                          {{straff.date}}
+                    <div title="Vinstraff gitt {{ straff.date | date:'d M Y H:i' }}" class="col-sm-2 nameCell minCell">
+                          {{straff.date | date:"d M Y H:i"}}
                     </div>
 
                   <div class="col-sm-2">
                     <span class="rightFloat">
+                      {%if straff.deleted %}
+                      <button type="submit" name="act" class="btn" title="Slettet straff" value="">
+                      <span class="glyphicon glyphicon-ban-circle"></span> Slettet</button>
+                      {% else %}
                       <button type="submit" name="act" class="btn btn-danger" title="Slett" value="delete {{ straff.pk }}">
-                      <span class="glyphicon glyphicon-ban-circle"></span></button>
+                      <span class="glyphicon glyphicon-ban-circle"></span> Slett</button>
+                      {% endif %}
                     </span>
                   </div>
                   </div>
+                  {% endifequal %}
                     {% endfor %}
+                  <div class="row noMargin">
+                    <hr>
+                    <div class="moreCell">
+                      
+                      {%if showDeleted %}
+                       <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="">
+                       <span class="glyphicon glyphicon-eye-close"></span> Skjul Slettede</button>
+                      {% else %}
+                       <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="showhidden {{ member.user.id }}">
+                       <span class="glyphicon glyphicon-trash"></span> Vis Slettede</button>
+                      {% endif %}     
+                     <button type="submit" name="act" class="btn permabutton" title="Annuler alle straffer" value="nuke {{ member.user.id }}">
+                      <span class="glyphicon glyphicon-fire"></span> Slett Alle</button>
+                    </div>
+                  </div>
                   </form>
                 </div> 
             </div>
