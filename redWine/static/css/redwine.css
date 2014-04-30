@@ -6,6 +6,9 @@ body {
   background-color: #ffffff;
 }
 
+#redWine .container{
+  padding-top: 106px;
+}
 
 .permaButton{
   color:#FFF;
@@ -17,13 +20,13 @@ body {
 }
 
 .navbar-inverse .navbar-brand{
-    color:#722F37;
+    color:#DF0D26;
     font-size: 30px;
     text-shadow: 1px 1px 2px #000;
     -moz-transition: color 1s ease;
--webkit-transition: color 1s ease;
--o-transition: color 1s ease;
-transition: color 1s ease;
+    -webkit-transition: color 1s ease;
+    -o-transition: color 1s ease;
+    transition: color 1s ease;
 }
 .panel-default > .panel-heading {
   font-size: 26px;
@@ -32,6 +35,14 @@ transition: color 1s ease;
 
 .wine{
     content: url(../img/wine.png);
+    height: 30px;
+}
+.beer{
+    content: url(../img/wine.png);
+    height: 30px;
+}
+.cake{
+    content: url(../img/cake.png);
     height: 30px;
 }
 

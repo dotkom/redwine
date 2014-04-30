@@ -5,13 +5,15 @@ from django.template.loader import get_template
 from django.template import Context
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied #change error
-from .models import UserProfile, Straff
+from django.contrib.auth.models import Group
+from django.core.exceptions import PermissionDenied #change error 
+from .models import Penalty
 from .forms import newPenaltyForm
-
+from django.contrib.auth import get_user_model
 
 @login_required
-def home(request):
+def redWine_home(request):
+    User = get_user_model()
     submitted=False
     showDeleted=False
     ownDelete=False
@@ -24,44 +26,49 @@ def home(request):
         if act =='add':
           if int(form.data['amount'])<=10 and 1<len(form.data['reason'])<=100:
             #todo: sjekk at man gir til samme komite
-            s=Straff(
-                    giver=UserProfile.objects.get(user=request.user),
-                    to=UserProfile.objects.get(pk=(int(form.data['to'])-1)),
+            s=Penalty(
+                    giver=request.user,
+                    to=User.objects.get(pk=(int(form.data['to']))),
                     amount=int(form.data['amount']),
                     reason=str(form.data['reason'].encode('utf8'))
                     )
             s.save()
-            editedUser=int(form.data['to'])-1
+            editedUser=int(form.data['to'])
           else:
             raise PermissionDenied
             
         elif 'delete' in act: 
-          straffen=Straff.objects.get(pk=int(act.split(" ")[1]))
-          if str(straffen.to.user.username) != str(request.user):
-            straffen.deleted=True
-            straffen.save()
-            editedUser=straffen.to.user.id
+          penalty=Penalty.objects.get(pk=int(act.split(" ")[1]))
+          if str(penalty.to.user.username) != str(request.user):
+            penalty.deleted=True
+            penalty.save()
+            editedUser=penalty.to.user.id
             
         elif 'nuke' in act:
-          for straffen in Straff.objects.filter(to=UserProfile.objects.get(pk=int(act.split(" ")[1])-1)):
-            if str(straffen.to.user.username) != str(request.user):
-              straffen.deleted=True
-              straffen.save()
-              editedUser=int(act.split(" ")[1])-1
+          for penalty in Penalty.objects.filter(to=User.objects.get(pk=int(act.split(" ")[1])-1)):
+            if str(penalty.to.user.username) != str(request.user):
+              penalty.deleted=True
+              penalty.save()
+              editedUser=int(act.split(" ")[1])
             else:
               ownDelete=True
         
         elif 'showhidden' in act:
           showDeleted=True
-          editedUser=int(act.split(" ")[1])-2
+          editedUser=int(act.split(" ")[1])-1
         
     else:
         form=newPenaltyForm()
 
-    #straffer=Straff.objects.all()
-    users=sorted(UserProfile.objects.all(), key=lambda a: a.total(), reverse=True)
+    #Penaltyer=Penalty.objects.all()
+    committees = {}
+    total = lambda user: sum([penalty.amount for penalty in user.penalties.filter(deleted=False)])
+    for committee in request.user.groups.all():
+      committees[committee] = [(user, total(user)) for user in committee.user_set.all()]
+
+    #users=sorted(User.objects.all(), key=lambda a: a.total(), reverse=True)
     return render(request, 'index.html', {  
-        'users' : users,
+        'committees' : committees,
         'submittedNew' : submitted,
         'showDeleted' : showDeleted,
         'editedUser' : editedUser,

@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import UserProfile, Straff
+from .models import Penalty
 
-admin.site.register(UserProfile)
-admin.site.register(Straff)
+admin.site.register(Penalty)
