@@ -1,33 +1,24 @@
-body {
+/*body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
   background-color: #ffffff;
-}
+}*/
 
 #redWine .container{
-  padding-top: 106px;
+  /*padding-top: 106px;*/
 }
 
-.permaButton{
+.permabutton{
   color:#FFF;
   background-color:#999;
   margin: 10px 20px 10px 15px;
 }
-.permaButton:hover{
+.permabutton:hover{
   background-color:#FF0000;
 }
 
-.navbar-inverse .navbar-brand{
-    color:#DF0D26;
-    font-size: 30px;
-    text-shadow: 1px 1px 2px #000;
-    -moz-transition: color 1s ease;
-    -webkit-transition: color 1s ease;
-    -o-transition: color 1s ease;
-    transition: color 1s ease;
-}
 .panel-default > .panel-heading {
   font-size: 26px;
   border-color: #722F37;
@@ -166,12 +157,6 @@ transition: background 0.5s ease;
 }
 
 
-.navbar-inverse .navbar-nav > li > a {
-    -moz-transition: color 0.5s ease;
--webkit-transition: color 0.5s ease;
--o-transition: color 0.5s ease;
-transition: color 0.5s ease;
-}
 .goNyan{ margin-left: 250% !important;}
 .nyan{
   height:90%;
@@ -192,21 +177,11 @@ transition: color 0.5s ease;
   z-index:10;
 }
 
-@media all and (min-width: 769px) {
-  .nav li a {
-    height: 52px;
-    vertical-align: top; 
-  }
-}
-
 @media all and (max-width: 768px) {
 blockquote p {
     font-size: 90%;
   }
 
-  .nav li {
-    display: inline-block;
-  }
 .wine{
     height: 15px;
 }

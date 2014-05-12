@@ -18,6 +18,7 @@ def redWine_home(request):
     showDeleted=False
     ownDelete=False
     editedUser=-1
+    kom = request.user.groups.all()[:1].get();
     if request.method == 'POST':
         
         act=str(request.POST['act'])
@@ -28,6 +29,7 @@ def redWine_home(request):
             #todo: sjekk at man gir til samme komite
             s=Penalty(
                     giver=request.user,
+                    committee=str(form.data['committee'].encode('utf8')),
                     to=User.objects.get(pk=(int(form.data['to']))),
                     amount=int(form.data['amount']),
                     reason=str(form.data['reason'].encode('utf8'))
@@ -38,6 +40,7 @@ def redWine_home(request):
             raise PermissionDenied
             
         elif 'delete' in act: 
+            #filter for kom
           penalty=Penalty.objects.get(pk=int(act.split(" ")[1]))
           if str(penalty.to.user.username) != str(request.user):
             penalty.deleted=True
@@ -45,8 +48,9 @@ def redWine_home(request):
             editedUser=penalty.to.user.id
             
         elif 'nuke' in act:
-          for penalty in Penalty.objects.filter(to=User.objects.get(pk=int(act.split(" ")[1])-1)):
-            if str(penalty.to.user.username) != str(request.user):
+          #filter for kom
+          for penalty in Penalty.objects.filter(to=User.objects.get(pk=int(act.split(" ")[1]))):
+            if str(penalty.to.username) != str(request.user):
               penalty.deleted=True
               penalty.save()
               editedUser=int(act.split(" ")[1])
@@ -62,13 +66,13 @@ def redWine_home(request):
 
     #Penaltyer=Penalty.objects.all()
     committees = {}
-    total = lambda user: sum([penalty.amount for penalty in user.penalties.filter(deleted=False)])
+    total = lambda user: sum([penalty.amount for penalty in user.penalties.filter(deleted=False, committee=kom)])
     for committee in request.user.groups.all():
       committees[committee] = [(user, total(user)) for user in committee.user_set.all()]
 
-    #users=sorted(User.objects.all(), key=lambda a: a.total(), reverse=True)
     return render(request, 'index.html', {  
         'committees' : committees,
+        'currCom' : kom,
         'submittedNew' : submitted,
         'showDeleted' : showDeleted,
         'editedUser' : editedUser,
