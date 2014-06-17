@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-RedWine
+{{currCom}} - RedWine
 {% endblock title %}
 {% load filters %}
 
@@ -17,150 +17,153 @@ RedWine
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                 {%for kom, users in committees.items %}
-                {%ifequal kom currCom %}
-                  <li class="top-menu-link active">
-                  <a class="active" href="./{{kom}}">{{ kom }}</a>
-                  </li>
-                  {%else%}
-                       <li class="top-menu-link">
-                        <a class="" href="./{{kom}}">{{ kom }}</a>
-                    </li>
-                {%endifequal%}
+                    {%ifequal currCom kom %}
+                        <li class="top-menu-link active">
+                            <a class="active" href="/redwine/{{kom}}">{{ kom }}</a>
+                        </li>
+                    {%else%}
+                        <li class="top-menu-link">
+                            <a class="" href="/redwine/{{kom}}">{{ kom }}</a>
+                        </li>
+                    {%endifequal%}
                 {% endfor %}
-            </ul>
-        </div>
+        </ul>
     </div>
+</div>
 </nav>
 
 <section id="redWine">
-<div class="container">
-<div id="nyan" class="nyan"></div>
-<div class="row">
-{%for kom, users in committees.items %}
-  <div class="col-md-12">
-    <div class="page-header" id="accordion">
-          <h2>Vinstraffer: {{kom}}</h2>
-  <table class="table">
-    <tr class="center">
-        <td class="left col-md-6"><strong>Navn</strong></td>
-        <td class="left"><strong>Antall</strong></td>
-        <td><strong>Sist straffet</strong></td>
-        <td></td>
-    </tr>
-    {%for member, tot in users %}
-    <tr data-toggle="collapse" data-target="#{{forloop.counter}}" data-parent="#accordion" class="accordion-toggle center clickable">
-        <td class="nameCell left col-md-6">{{ member.get_full_name }}</td>
-        <td title="{{ tot }} vinstraffer" class="nameCell left">
-            {% for wine in tot|get_range %}
-            <img src="/static/img/wine.png" alt="Vin" class="wine">
-            {% endfor %}
-        </td>
-      <td class="nameCell">{{ member.penalties.latest.date | date:"d M Y H:i" }}</td>
-        <td><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
-    </tr>
-    <tr>
+    <div class="container">
+        <div id="nyan" class="nyan"></div>
+        <div class="row">
+    {%for kom, users in committees.items %}
+    {%ifequal currCom kom %} 
+    <div class="col-md-12">
+        <div class="page-header" id="accordion">
+          <h2>{{kom}} - Vinstraffer</h2>
+          <table class="table">
+            <tr class="center">
+                <td class="left col-md-5"><strong>Navn</strong></td>
+                <td class=""><strong>Antall</strong></td>
+                <td><strong>Sist straffet</strong></td>
+                <td></td>
+            </tr>
+            {%for member, tot in users %}
+            <tr data-toggle="collapse" data-target="#{{forloop.counter}}" data-parent="#accordion" class="accordion-toggle center clickable">
+                <td class="nameCell left col-md-5">{{ member.get_full_name }}</td>
+                <td title="{{ tot }} vinstraffer" class="nameCell">
+                    {% for wine in tot|get_range %}
+                    <img src="/static/img/wine.png" alt="Vin" class="wine">
+                    {% endfor %}
+                </td>
+                <td class="nameCell">{{ member.penalties.latest.date | date:"d M Y H:i" }}</td>
+                <td><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
+            </tr>
+            <tr>
         <td colspan="4" class="hiddenRow">
           <div class="accordian-body collapse elementInfo {% ifequal forloop.counter editedUser %}in{% endifequal %}" id="{{forloop.counter}}">
 
-                <div class="row noMargin">
-                  <div class="newCol">
-                    <form class="form-inline addNew" role="form" action="." method="post">
+            <div class="row noMargin">
+              <div class="newCol">
+                <form class="form-inline addNew" role="form" action="." method="post">
                     {% csrf_token %}
-                     {{ form.non_field_errors }}
-                      <div class="form-group">
+                    {{ form.non_field_errors }}
+                    <div class="form-group">
                         <div class="col-xs-10">
-                        <label class="sr-only" for="exampleInputEmail2">Ny Vinstraff</label>
-                        {{ form.reason.errors }}
-                      <input type="text" maxlength="100" class="form-control" id="id_reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
-                          </div>
+                            <label class="sr-only" for="exampleInputEmail2">Ny Vinstraff</label>
+                            {{ form.reason.errors }}
+                            <input type="text" maxlength="100" class="form-control" id="id_reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
+                        </div>
                         <div class="addBox col-xs-1">
                           {{ form.amount.errors }}
-                        <select id="select-control" class="form-control" id="amount" name="amount">
-                        {% for num in "123456789"%}
-                        <option{%ifequal num wineString %} nosel {% endifequal %}>{{ num }}</option>
-                        {%endfor%}
+                          <select id="select-control" class="form-control" id="amount" name="amount">
+                            {% for num in "123456789"%}
+                            <option{%ifequal num wineString %} nosel {% endifequal %}>{{ num }}</option>
+                            {%endfor%}
                         </select>
                         <input id="id_to" name="to" type="hidden" value="{{ member.id }}">
                         <input id="committee" name="committee" type="hidden" value="{{ kom }}">
-<button type="submit" name="act" class="btn btn-success" title="Ny Vinstraff" value="add">
-                      <span class="glyphicon glyphicon-plus"></span></button>
-                        </div>
+                        <button type="submit" name="act" class="btn btn-success" title="Ny Vinstraff" value="add">
+                          <span class="glyphicon glyphicon-plus"></span></button>
                       </div>
-
-                     
-                    </div>
-                  </div>
-                  {%for penalty in member.penalties.all %}
-                  {% ifequal penalty.deleted showDeleted %}
-                  <div class="row noMargin">
-                  <hr>
-                  <div class="col-md-6">
-                    <blockquote>
-                      <p class="breakword">{{ penalty.reason }}</p> 
-                    <small>Gitt av <cite title="Source Title">{{ penalty.giver }}</cite></small>
-                    </blockquote>
                   </div>
 
-                  <div title="{{ penalty.amount }} vinstraffer." class="col-sm-2 nameCell left noLeftPadd">
-                        {% for vin in penalty.amount|get_range %}
-                    {%ifequal member.get_full_name 'Rikke Rye' %}
-                        <img src="/static/img/cake.png" alt="Cake" class="cake">
-                    {%else%}
-                        <img src="/static/img/wine.png" alt="Vin" class="wine">
-                    {%endifequal%}
-                        {% endfor %}
-                    </div>
 
-                    <div title="Vinstraff gitt {{ penalty.date | date:'d M Y H:i' }}" class="col-sm-2 nameCell minCell">
-                          {{penalty.date | date:"d M Y H:i"}}
-                    </div>
+              </div>
+          </div>
+          {%for penalty in member.penalties.all %}
+          {% ifequal penalty.deleted showDeleted %}
+          <div class="row noMargin">
+              <hr>
+              <div class="col-md-6">
+                <blockquote>
+                  <p class="breakword">{{ penalty.reason }}</p> 
+                  <small>Gitt av <cite title="Source Title">{{ penalty.giver }}</cite></small>
+              </blockquote>
+          </div>
 
-                  <div class="col-sm-2">
-                    <span class="rightFloat">
-                      {%if penalty.deleted %}
-                      <button type="button" name="act" class="btn" title="Slettet straff" value="">
-                      <span class="glyphicon glyphicon-ban-circle"></span> Slettet</button>
-                      {% else %}
-                      <button type="submit" name="act" class="btn btn-danger" title="Slett" value="delete {{ penalty.pk }}">
+              <div title="{{ penalty.amount }} vinstraffer." class="col-sm-2 nameCell center noLeftPadd">
+                {% for vin in penalty.amount|get_range %}
+                {%ifequal member.get_full_name 'Rikke Rye' %}
+                <img src="/static/img/cake.png" alt="Cake" class="cake">
+                {%else%}
+                <img src="/static/img/wine.png" alt="Vin" class="wine">
+                {%endifequal%}
+                {% endfor %}
+            </div>
+
+            <div title="Vinstraff gitt {{ penalty.date | date:'d M Y H:i' }}" class="col-sm-2 nameCell minCell">
+              {{penalty.date | date:"d M Y H:i"}}
+          </div>
+
+          <div class="col-sm-2">
+            <span class="rightFloat">
+              {%if penalty.deleted %}
+              <button type="button" name="act" class="btn" title="Slettet straff" value="">
+                  <span class="glyphicon glyphicon-ban-circle"></span> Slettet</button>
+                  {% else %}
+                  <button type="submit" name="act" class="btn btn-danger" title="Slett" value="delete {{ penalty.pk }}">
                       <span class="glyphicon glyphicon-ban-circle"></span> Slett</button>
                       {% endif %}
-                    </span>
-                  </div>
-                  </div>
-                  {% endifequal %}
-                    {% endfor %}
-                  <div class="row noMargin">
-                    <hr>
-                    <div class="moreCell">
-                      
-                      {%if showDeleted %}
-                       <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="">
-                       <span class="glyphicon glyphicon-eye-close"></span> Skjul Slettede</button>
-                      {% else %}
-                       <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="showhidden {{ member.id }}">
-                       <span class="glyphicon glyphicon-trash"></span> Vis Slettede</button>
-                      {% endif %}     
+                  </span>
+              </div>
+          </div>
+          {% endifequal %}
+          {% endfor %}
+          <div class="row noMargin">
+            <hr>
+            <div class="moreCell">
+
+              {%if showDeleted %}
+              <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="">
+                 <span class="glyphicon glyphicon-eye-close"></span> Skjul Slettede</button>
+                 {% else %}
+                 <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="showhidden {{ member.id }}">
+                     <span class="glyphicon glyphicon-trash"></span> Vis Slettede</button>
+                     {% endif %}     
                      <button type="submit" name="act" class="btn permabutton" title="Annuler alle penalties" value="nuke {{ member.id }}">
                       <span class="glyphicon glyphicon-fire"></span> Slett Alle</button>
-                    </div>
                   </div>
-                  </form>
-                </div> 
-            </div>
-                
-        </td>
-    </tr>
-    {%endfor%}
+              </div>
+          </form>
+      </div> 
+  </div>
 
-</table>
+          </td>
+      </tr>
+      {%endfor%}
+
+  </table>
 </div>
+</div>
+{% endifequal %}
 {% endfor %}
-</div>
+
 <script type="text/javascript" src="{{ STATIC_URL }}css\kon.js" ></script>  
 <script>
-{%if ownDelete %}
-   $(document.getElementById("nyan")).toggleClass( "goNyan" ); 
-{% endif %}
+    {%if ownDelete %}
+    $(document.getElementById("nyan")).toggleClass( "goNyan" ); 
+    {% endif %}
 </script>
 </div>
 </section>
