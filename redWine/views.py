@@ -13,6 +13,11 @@ from django.contrib.auth import get_user_model
 
 @login_required
 def redWine_home(request):
+    for com in request.user.groups.all():
+        for perm in com.permissions.all():
+            if 'redWine' in str(perm):
+                return redWine_com(request, com)
+
     return redWine_com(request, request.user.groups.all()[:1].get())
 
 def redWine_com(request, committee):
@@ -22,6 +27,7 @@ def redWine_com(request, committee):
     ownDelete=False
     editedUser=-1
     kom = request.user.groups.filter(name=committee)[:1].get();
+
     if request.method == 'POST':
         act=str(request.POST['act'])
         form = newPenaltyForm(data=request.POST)
@@ -34,7 +40,9 @@ def redWine_com(request, committee):
                     committee= str(form.data['committee'].encode('utf8')),
                     to=        User.objects.get(pk=(int(form.data['to']))),
                     amount=    int(form.data['amount']),
-                    reason=    str(form.data['reason'].encode('utf8'))
+                    reason=    str(form.data['reason'].encode('utf8')),
+                    item=      "wine",
+                    item_name= "vin"
                     )
                 s.save()
                 editedUser=int(form.data['to'])
@@ -42,7 +50,7 @@ def redWine_com(request, committee):
                 raise PermissionDenied
                 
         elif 'delete' in act: 
-            #filter for kom
+            #filter for koms
             penalty=Penalty.objects.get(pk=int(act.split(" ")[1]))
             if str(penalty.to.username) != str(request.user):
                 penalty.deleted=True
@@ -52,7 +60,7 @@ def redWine_com(request, committee):
         elif 'nuke' in act:
             #filter for kom
             for penalty in Penalty.objects.filter(to=User.objects.get(pk=int(act.split(" ")[1]))):
-                if str(penalty.to.username) != str(request.user):
+                if str(penalty.to.id) != str(request.user.id):
                     penalty.deleted=True
                     penalty.save()
                     editedUser=int(act.split(" ")[1])
@@ -61,17 +69,18 @@ def redWine_com(request, committee):
 
         elif 'showhidden' in act:
             showDeleted=True
-            editedUser=int(act.split(" ")[1])-1
+            editedUser=int(act.split(" ")[1])
 
         else:
             form=newPenaltyForm()
 
-    #Penaltyer=Penalty.objects.all()
-    committees = {}
-    total = lambda user: sum([penalty.amount for penalty in user.penalties.filter(deleted=False, committee=kom)])
-    for committee in request.user.groups.all():
-        if 'redWine' in get_group_permissions(obj=committee):
-            committees[committee] = [(user, total(user)) for user in committee.user_set.all()]
+    committees = {} #move total into loop if multiple coms in one page
+    total = lambda user: sum([penalty.amount for penalty in user.penalties.filter(deleted=False, committee=com)])
+    for com in request.user.groups.all():
+        for perm in com.permissions.all():      #fix dis shit, check if redwine in all perms
+            if 'redWine' in str(perm):
+                committees[com] = [(user, total(user)) for user in com.user_set.all()] #wat? wat. sort by total?
+                break
 
     return render(request, 'index.html', {  
         'committees'   : committees,

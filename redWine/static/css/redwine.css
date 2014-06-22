@@ -29,7 +29,7 @@
     height: 30px;
 }
 .beer{
-    content: url(../img/wine.png);
+    content: url(../img/beer.png); /*todo: make*/
     height: 30px;
 }
 .cake{
@@ -70,12 +70,13 @@ a {
     padding: 12px 8px 8px 15px !important;
 }
 .nameCell {
-  padding: 8px 8px 8px 8px !important;
+  padding: 8px 8px 8px 8px;
   max-width: 268px !important;
   vertical-align: middle !important;
 }
 
-.page-header{padding-bottom: 9px; margin: 40px 0 0;}
+
+#accordion {padding-bottom: 9px; margin: 13px 0 0;}
 
 .noMargin{margin: 0;}
 
@@ -137,13 +138,22 @@ blockquote{
     float: right;
     width: 100%;
 }
+cite{color:#777;}
+cite:hover{color:#024b8a; }
+a:hover{text-decoration: none;}
+
+.frontIcons{
+  padding-right: 7px;
+  color:#888;
+}
+
 hr{
     margin: 0px;
 }
 .col-sm-2{
-    padding-top: 20px !important;
+  padding-top: 22px;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle !important;
 }
 .col-md-6{
   display: inline-block;
@@ -151,12 +161,12 @@ hr{
 }
 .col-md-5{width:43.2% !important;}
 .minCell{
-    padding-top: 25px !important;
+    padding-top: 32px;
 }
 .rightFloat{
     float:right;
 }
-
+.accordion-toggle .col-sm-2{padding-top: 8px;}
 
 
 tr {
@@ -167,6 +177,22 @@ tr {
 -o-transition: background 0.5s ease;
 transition: background 0.5s ease;
 }
+
+input {
+  border:solid 1px #ccc;
+  border-radius: 5px;
+  padding:7px 14px;
+  margin-bottom:10px;
+  float: right;
+}
+input:focus {
+  outline:none;
+  border-color:#aaa;
+}
+
+.filter-table .quick { margin-left: 0.5em; font-size: 0.8em; text-decoration: none; }
+.fitler-table .quick:hover { text-decoration: underline; }
+td.alt { background-color: #ffc; background-color: rgba(255, 255, 0, 0.2); }
 
 /*.clickable{ background:#f5f5f5}
 
@@ -200,7 +226,7 @@ blockquote p {
   }
 
 .wine{
-    height: 15px;
+    height: 20px;
 }
 .col-sm-2{
    font-size: 90%;

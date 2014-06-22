@@ -13,6 +13,8 @@ class Penalty(models.Model):
     reason = models.CharField(max_length=100)
     date = models.DateTimeField(auto_now=True)
     deleted = models.BooleanField(default=False)
+    item = models.CharField(default="wine", max_length=30)
+    item_name = models.CharField(default="vin", max_length=30)
     def __unicode__(self):
         return u'%s - %s' % (self.amount, self.to)
     class Meta:
