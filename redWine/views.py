@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime, re
+from operator import itemgetter
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.template import Context
@@ -14,7 +15,7 @@ from django.contrib.auth import get_user_model
 @login_required
 def redWine_home(request):
     for com in request.user.groups.all():
-        for perm in com.permissions.all():
+        for perm in com.permissions.all():      #ganske stygt, gjøres med no fancy functional shizzle?
             if 'redWine' in str(perm):
                 return redWine_com(request, com)
 
@@ -31,7 +32,6 @@ def redWine_com(request, committee):
     if request.method == 'POST':
         act=str(request.POST['act'])
         form = newPenaltyForm(data=request.POST)
-        print(act)
         if act =='add':
             if int(form.data['amount'])<=10 and 1<len(form.data['reason'])<=100:
                 #todo: sjekk at man gir til samme komite
@@ -79,7 +79,11 @@ def redWine_com(request, committee):
     for com in request.user.groups.all():
         for perm in com.permissions.all():      #fix dis shit, check if redwine in all perms
             if 'redWine' in str(perm):
-                committees[com] = [(user, total(user)) for user in com.user_set.all()] #wat? wat. sort by total?
+                if com==kom:
+                    committees[com] = [(user, total(user)) for user in com.user_set.all()] #wat? wat. sort by total?
+                    committees[com].sort(key=itemgetter(1),reverse=True)
+                else:
+                    committees[com] = (0,0)
                 break
 
     return render(request, 'index.html', {  

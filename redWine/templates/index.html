@@ -55,7 +55,7 @@
             </thead>
             <tbody>
             {%for member, tot in users %}
-            <tr data-toggle="collapse" data-target="#{{member.id}}" data-parent="#accordion" class="accordion-toggle center clickable">
+            <tr data-toggle="collapse" data-target="#{{kom.id}}_{{member.id}}" data-parent="#accordion" class="accordion-toggle center clickable">
                 <td class="nameCell left col-md-6 listname">
                 <a href="/profile/{{member.username}}/" class="glyphicon glyphicon-user frontIcons"></a>
                 {{ member.get_full_name }}
@@ -71,7 +71,7 @@
             </tr>
             <tr>
         <td colspan="4" class="hiddenRow">
-          <div class="accordian-body collapse elementInfo {% ifequal member.id editedUser %}in{% endifequal %}" id="{{member.id}}">
+          <div class="accordian-body collapse elementInfo {% ifequal member.id editedUser %}in{% endifequal %}" id="{{kom.id}}_{{member.id}}">
 
             <div class="row noMargin">
               <div class="newCol">
