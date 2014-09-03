@@ -8,6 +8,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied #change error 
+from django.db.models import Q
 from .models import Penalty
 from .forms import newPenaltyForm
 from django.contrib.auth import get_user_model
@@ -76,15 +77,12 @@ def redWine_com(request, committee):
 
     committees = {} #move total into loop if multiple coms in one page
     total = lambda user: sum([penalty.amount for penalty in user.penalties.filter(deleted=False, committee=com)])
-    for com in request.user.groups.all():
-        for perm in com.permissions.all():      #fix dis shit, check if redwine in all perms
-            if 'redWine' in str(perm):
-                if com==kom:
-                    committees[com] = [(user, total(user)) for user in com.user_set.all()] #wat? wat. sort by total?
-                    committees[com].sort(key=itemgetter(1),reverse=True)
-                else:
-                    committees[com] = (0,0)
-                break
+    for com in request.user.groups.filter(Q(name="Hovedstyret")|Q(name__endswith="Kom")):
+        if com==kom:
+            committees[com] = [(user, total(user)) for user in com.user_set.all()] #wat? wat. sort by total?
+            committees[com].sort(key=itemgetter(1),reverse=True)
+        else:
+            committees[com] = (0,0)
 
     return render(request, 'index.html', {  
         'committees'   : committees,
