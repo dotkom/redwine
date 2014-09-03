@@ -19,7 +19,7 @@ def redWine_home(request):
             if 'redWine' in str(perm):
                 return redWine_com(request, com)
 
-    return render(request, 'index.html', { "hasNoCommittees":True })
+    return render(request, 'index.html', { "error":True, "errorMessage":"You have no active redWine committees!"})
 
 def redWine_com(request, committee):
     User = get_user_model()
@@ -47,7 +47,7 @@ def redWine_com(request, committee):
                 s.save()
                 editedUser=int(form.data['to'])
             else:
-                raise PermissionDenied
+                return render(request, 'index.html', { "error":True, "errorMessage":"The reason must be between 1 and 100 chars."})
                 
         elif 'delete' in act: 
             #filter for koms

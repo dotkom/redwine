@@ -9,7 +9,7 @@ class Penalty(models.Model):
     to =        models.ForeignKey(get_user_model(), related_name='penalties')
     giver =     models.ForeignKey(get_user_model(), related_name='penaltygiver')
     amount =    models.PositiveIntegerField()
-    committee = models.CharField(default="dotKom", max_length=60)
+    committee = models.CharField(max_length=60)
     reason =    models.CharField(max_length=100)
     date =      models.DateTimeField(auto_now=True)
     deleted =   models.BooleanField(default=False)
