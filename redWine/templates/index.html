@@ -164,7 +164,9 @@
 </div>
 {% endifequal %}
 {% endfor %}
-
+{% if hasNoCommittees %}
+<div class="page-header">Du har ikke tilgang til noen komiteer med vinstraffer.</div>
+{% endif %}
 </div>
 </section>
 {% endblock content %}

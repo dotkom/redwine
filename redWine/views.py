@@ -19,7 +19,7 @@ def redWine_home(request):
             if 'redWine' in str(perm):
                 return redWine_com(request, com)
 
-    return redWine_com(request, request.user.groups.all()[:1].get())
+    return render(request, 'index.html', { "hasNoCommittees":True })
 
 def redWine_com(request, committee):
     User = get_user_model()
