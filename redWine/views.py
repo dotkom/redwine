@@ -15,12 +15,10 @@ from django.contrib.auth import get_user_model
 
 @login_required
 def redWine_home(request):
-    for com in request.user.groups.all():
-        for perm in com.permissions.all():      #ganske stygt, gjøres med no fancy functional shizzle?
-            if 'redWine' in str(perm):
-                return redWine_com(request, com)
-
-    return render(request, 'index.html', { "error":True, "errorMessage":"You have no active redWine committees!"})
+    try:
+        return redWine_com(request, request.user.groups.filter(Q(name="Hovedstyret")|Q(name__endswith="Kom"))[0])
+    except(IndexError):
+        return render(request, 'index.html', { "error":True, "errorMessage":"You have no active redWine committees!"})
 
 def redWine_com(request, committee):
     User = get_user_model()
