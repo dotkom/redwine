@@ -1,4 +1,4 @@
-# Django settings for redWine project.
+# Django settings for redwine project.
 import os
 
 PROJECT_SETTINGS_DIRECTORY = os.path.dirname(globals()['__file__'])
@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'redWine.db',                      # Or path to database file if using sqlite3.
+        'NAME': 'redwine.db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -98,7 +98,7 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
-AUTH_PROFILE_MODULE = 'redWine.UserProfile'
+AUTH_PROFILE_MODULE = 'redwine.UserProfile'
 
 
 MIDDLEWARE_CLASSES = (
@@ -111,10 +111,10 @@ MIDDLEWARE_CLASSES = (
      'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'redWine.urls'
+ROOT_URLCONF = 'redwine.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'redWine.wsgi.application'
+WSGI_APPLICATION = 'redwine.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_SETTINGS_DIRECTORY, 'templates/')
@@ -127,7 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'redWine',
+    'redwine',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

@@ -8,16 +8,16 @@ user in their own comitee(s), users can add, delete and manage punishments.
 Quick start
 -----------
 
-1. Add "redWine" to your INSTALLED_APPS setting like this::
+1. Add "redwine" to your INSTALLED_APPS setting like this::
 
     INSTALLED_APPS = (
         ...
-        'redWine',
+        'redwine',
     )
 
 2. Include the redWine URLconf in your project urls.py like this::
 
-    url(r'^redwine/', include('redWine.urls')),
+    url(r'^redwine/', include('redwine.urls')),
 
 3. Run `python manage.py migrate` to create the redWine models.
 

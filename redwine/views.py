@@ -14,13 +14,13 @@ from .forms import newPenaltyForm
 from django.contrib.auth import get_user_model
 
 @login_required
-def redWine_home(request):
+def redwine_home(request):
     try:
-        return redWine_com(request, request.user.groups.filter(Q(name="Hovedstyret")|Q(name__endswith="Kom"))[0])
+        return redwine_com(request, request.user.groups.filter(Q(name="Hovedstyret")|Q(name__endswith="Kom"))[0])
     except(IndexError):
-        return render(request, 'index.html', { "error":True, "errorMessage":"You have no active redWine committees!"})
+        return render(request, 'index.html', { "error":True, "errorMessage":"You have no active redwine committees!"})
 
-def redWine_com(request, committee):
+def redwine_com(request, committee):
     User = get_user_model()
     submitted=False
     showDeleted=False
