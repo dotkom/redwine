@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='redwine',
-    version='0.56',
+    version='1.0.0',
     packages=['redwine'],
     include_package_data=True,
     license='BSD License',  # example license
