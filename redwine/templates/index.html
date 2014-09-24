@@ -34,7 +34,7 @@
 
 <section id="redwine">
     <div class="container">
-        <div id="nyan" class="nyan"></div>
+        <!--<div id="nyan" class="nyan"></div>-->
         <div class="row">
     {%for kom, users in committees.items %}
     {%ifequal currCom kom %} 
@@ -180,7 +180,7 @@ $(document).ready(function() {
           inputSelector:"#search"
         });
         {%if ownDelete %}
-        $(document.getElementById("nyan")).toggleClass( "goNyan" );
+        //$(document.getElementById("nyan")).toggleClass( "goNyan" );
         {% endif %}
     });
 </script>

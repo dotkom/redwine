@@ -57,7 +57,7 @@ def redwine_com(request, committee):
         elif 'delete' in act: 
             #filter for koms
             penalty=Penalty.objects.get(pk=int(act.split(" ")[1]))
-            if str(penalty.to.username) != str(request.user):
+            if str(penalty.to.id) != str(request.user.id):
                 penalty.deleted=True
                 penalty.save()
                 editedUser=penalty.to.id
