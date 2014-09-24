@@ -26,7 +26,13 @@ def redwine_com(request, committee):
     showDeleted=False
     ownDelete=False
     editedUser=-1
-    kom = request.user.groups.filter(name=committee)[:1].get();
+    try:
+        kom = request.user.groups.filter(name=committee)[:1].get();
+    except:                                                             #TODO: handle exception better!
+        return render(request, 'index.html', { 
+            "error":True, 
+            "errorMessage":"You don't have access to this committee. If you think you should, please contact a sysadmin."
+            })
 
     if request.method == 'POST':
         act=str(request.POST['act'])
