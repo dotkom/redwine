@@ -1,1 +1,5 @@
-recursive-include wiki *.html *.txt *.png *.js *.css *.gif *.less *.mo *.po *.otf *.svg *.woff *.eot *.ttf
+include README.md
+recursive-include redwine/static *
+recursive-include redwine/templates *
+recursive-include redwine/templatetags *
+
