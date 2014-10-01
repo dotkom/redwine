@@ -1,6 +1,5 @@
-=====
-RedWine
-=====
+Redwine
+=======
 
 RedWine is a simple Django app to conduct Web-based wine punishments. For each
 user in their own comitee(s), users can add, delete and manage punishments.
