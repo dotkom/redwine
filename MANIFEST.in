@@ -1,0 +1,1 @@
+recursive-include wiki *.html *.txt *.png *.js *.css *.gif *.less *.mo *.po *.otf *.svg *.woff *.eot *.ttf
