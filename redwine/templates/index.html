@@ -26,16 +26,16 @@
         <div class="container">
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
-                    {%for kom, users in committees.items %}
-                        {%ifequal currCom kom %}
+                    {% for kom, users in committees.items %}
+                        {% ifequal currCom kom %}
                             <li class="top-menu-link active">
-                                <a class="active" href="/redwine/{{kom}}">{{ kom }}</a>
+                                <a class="active" href="/redwine/{{ kom }}">{{ kom }}</a>
                             </li>
-                        {%else%}
+                        {% else %}
                             <li class="top-menu-link">
-                                <a class="" href="/redwine/{{kom}}">{{ kom }}</a>
+                                <a class="" href="/redwine/{{ kom }}">{{ kom }}</a>
                             </li>
-                        {%endifequal%}
+                        {% endifequal %}
                     {% endfor %}
                 </ul>
             </div>
@@ -48,8 +48,8 @@
                     {% ifequal currCom kom %} 
                         <div class="col-md-12">
                         <div class="page-header">
-                            <input type="search" class="search" placeholder="Søk" name="search" id="search">
-                            <h2>{{kom}} - Vinstraffer</h2>
+                            <input type="search" class="search" placeholder="Søk" name="search" id="search" />
+                            <h2>{{ kom }} - Vinstraffer</h2>
                         </div>
                         <div class="page-header" id="accordion">
                             <table class="table searchtable">
@@ -98,7 +98,7 @@
                                                                         {{ form.amount.errors }}
                                                                         <select id="select-control" class="form-control" id="amount" name="amount">
                                                                             {% for num in "123456789" %}
-                                                                                <option{%ifequal num wineString %} nosel {% endifequal %}>{{ num }}</option>
+                                                                                <option{% ifequal num wineString %} nosel {% endifequal %}>{{ num }}</option>
                                                                             {% endfor %}
                                                                         </select>
                                                                         <input id="id_to" name="to" type="hidden" value="{{ member.id }}" />
