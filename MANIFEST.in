@@ -1,5 +1,4 @@
-include README.md
-recursive-include redwine/static *
-recursive-include redwine/templates *
-recursive-include redwine/templatetags *
-
+-include README.md
+-recursive-include redwine/static *
+-recursive-include redwine/templates *
+-recursive-include redwine/templatetags *
