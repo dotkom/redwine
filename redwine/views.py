@@ -42,14 +42,18 @@ def redwine_com(request, committee):
         if act =='add':
             if int(form.data['amount'])<=10 and 1<len(form.data['reason'])<=100:
                 #todo: sjekk at man gir til samme komite
+                item=str(form.data['type'].encode('utf8')).split(".")
+                if len(item)<1:
+                    return
+
                 s=Penalty(
                     giver=     request.user,
                     committee= str(form.data['committee'].encode('utf8')),
                     to=        User.objects.get(pk=(int(form.data['to']))),
                     amount=    int(form.data['amount']),
                     reason=    str(form.data['reason'].encode('utf8')),
-                    item=      "wine",
-                    item_name= "vin"
+                    item=      item[0],
+                    item_name= item[1]
                     )
                 s.save()
                 editedUser=int(form.data['to'])
