@@ -7,16 +7,18 @@ from django.template import Context
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
+from django.conf import settings
 from django.core.exceptions import PermissionDenied #change error 
 from django.db.models import Q
 from .models import Penalty
 from .forms import newPenaltyForm
 from django.contrib.auth import get_user_model
 
+
 @login_required
 def redwine_home(request):
     try:
-        return redwine_com(request, request.user.groups.filter(Q(name="Hovedstyret")|Q(name__endswith="Kom"))[0])
+        return redwine_com(request, request.user.groups.filter(pk__in=settings.USER_SEARCH_GROUPS)[0])
     except(IndexError):
         return render(request, 'index.html', { "error":True, "errorMessage":"You have no active redwine committees!"})
 
@@ -81,7 +83,7 @@ def redwine_com(request, committee):
 
     committees = {} #move total into loop if multiple coms in one page
     total = lambda user: sum([penalty.amount for penalty in user.penalties.filter(deleted=False, committee=com)])
-    for com in request.user.groups.filter(Q(name="Hovedstyret")|Q(name__endswith="Kom")):
+    for com in request.user.groups.filter(pk__in=settings.USER_SEARCH_GROUPS):
         if com==kom:
             committees[com] = [(user, total(user)) for user in com.user_set.all()] #wat? wat. sort by total?
             committees[com].sort(key=itemgetter(1),reverse=True)
