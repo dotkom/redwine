@@ -60,10 +60,12 @@
                 <a href="/profile/{{member.username}}/" class="glyphicon glyphicon-user frontIcons"></a>
                 {{ member.get_full_name }}
                 </td>
-                <td title="{{ tot }} {% ifequal tot 1 %}vinstraff{%else%}vinstraffer{%endifequal%}"
+                <td title="{{ tot }} {% ifequal tot 1 %}straff{%else%}straffer{%endifequal%}"
                 class="col-sm-2 nameCell total">
-                    {% for wine in tot|get_range %}
-                    <img src="/static/img/wine.png" alt="Vin" class="wine">
+                    {% for penalty in member.penalties.all %}
+                        {% for penalties in penalty.amount|get_range %}
+                            <img src="/static/img/{{penalty.item}}.png" alt="{{penalty.item_name}}" class="{{penalty.item}}">
+                        {% endfor %}
                     {% endfor %}
                 </td>
                 <td class="nameCell">{{ member.penalties.latest.date | date:"d M Y H:i" }}</td>
@@ -86,13 +88,17 @@
                         </div>
                         <div class="addBox col-xs-1">
                           {{ form.amount.errors }}
+                          <select id="select-control" class="form-control" id="type" name="type" style="width: auto !important;">
+                              <option value="wine.vin">Vin</option>
+                              <option value="beer.øl">Øl</option>
+                          </select>
                           <select id="select-control" class="form-control" id="amount" name="amount">
                             {% for num in "123456789"%}<option{%ifequal num wineString %} nosel {% endifequal %}>{{ num }}</option>{%endfor%}
                         </select>
                         <input id="id_to" name="to" type="hidden" value="{{ member.id }}">
                         <input id="committee" name="committee" type="hidden" value="{{ kom }}">
                         <button type="submit" name="act" class="btn btn-success" title="Ny Vinstraff" value="add">
-                          <span class="glyphicon glyphicon-plus"></span></button>
+                          <span class="glyphicon glyphicon-plus"></span> Ny</button>
                       </div>
                   </div>
 
@@ -113,7 +119,7 @@
               
               <div title="{{ penalty.amount }} {% ifequal penalty.amount 1 %}{{penalty.item_name}}straff{%else%}{{penalty.item_name}}straffer{%endifequal%}" class="col-sm-2 nameCell center noLeftPadd">
                 {% for vin in penalty.amount|get_range %}
-                <img src="/static/img/{{penalty.item}}.png" alt="{{penalty.item}}" class="{{penalty.item}}">
+                <img src="/static/img/{{penalty.item}}.png" alt="{{penalty.item_name}}" class="{{penalty.item}}">
                 {% endfor %}
             </div>
 
