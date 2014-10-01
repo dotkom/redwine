@@ -47,11 +47,10 @@
                 {% for kom, users in committees.items %}
                     {% ifequal currCom kom %} 
                         <div class="col-md-12">
-                        <div class="page-header">
-                            <input type="search" class="search" placeholder="Søk" name="search" id="search" />
-                            <h2>{{ kom }} - Vinstraffer</h2>
-                        </div>
-                        <div class="page-header" id="accordion">
+                            <div class="page-header">
+                                <input type="search" class="search" placeholder="Søk" name="search" id="search" />
+                                <h2>{{ kom }} - Vinstraffer</h2>
+                            </div>
                             <table class="table searchtable">
                                 <thead>
                                     <tr class="center">
@@ -82,10 +81,10 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4" class="hiddenRow">
-                                                <div class="accordian-body collapse elementInfo {% ifequal member.id editedUser %}in{% endifequal %}" id="{{ kom.id }}_{{ member.id }}">
-                                                    <div class="row noMargin">
-                                                        <div class="newCol">
-                                                            <form class="form-inline addNew" role="form" action="." method="post">
+                                                <form class="form-inline addNew" role="form" action="." method="post">
+                                                    <div class="accordian-body collapse elementInfo {% ifequal member.id editedUser %}in{% endifequal %}" id="{{ kom.id }}_{{ member.id }}">
+                                                        <div class="row noMargin">
+                                                            <div class="newCol">
                                                                 {% csrf_token %}
                                                                 {{ form.non_field_errors }}
                                                                 <div class="form-group">
@@ -108,66 +107,66 @@
                                                                         </button>
                                                                     </div>
                                                                 </div>
-                                                            </form>
-                                                        </div>
-                                                        {% for penalty in member.penalties.all %}
-                                                            {% ifequal penalty.committee currCom.name %}
-                                                                {% ifequal penalty.deleted showDeleted %}
-                                                                    <div class="row noMargin">
-                                                                        <hr />
-                                                                        <div class="col-md-6">
-                                                                            <blockquote>
-                                                                                <p class="breakword">
-                                                                                    {{ penalty.reason }}
-                                                                                </p> 
-                                                                                <small>
-                                                                                    Gitt av <a href="/profile/{{penalty.giver.username}}/">
-                                                                                        <cite title="Brukerprofil">
-                                                                                            {{ penalty.giver }}
-                                                                                        </cite>
-                                                                                    </a>
-                                                                                </small>
-                                                                            </blockquote>
-                                                                        </div>
-                                                                        <div title="{{ penalty.amount }} {% ifequal penalty.amount 1 %}{{ penalty.item_name }}straff{% else %}{{ penalty.item_name }}straffer{% endifequal %}" class="col-sm-2 nameCell center noLeftPadd">
-                                                                            {% for vin in penalty.amount|get_range %}
-                                                                                <img src="/static/img/{{ penalty.item }}.png" alt="{{ penalty.item }}" class="{{ penalty.item }}">
-                                                                            {% endfor %}
-                                                                        </div>
-                                                                        <div title="Vinstraff gitt {{ penalty.date | date:'d M Y H:i' }}" class="col-sm-2 nameCell minCell">
-                                                                            {{ penalty.date | date:"d M Y H:i" }}
-                                                                        </div>
-                                                                        <div class="col-sm-2">
-                                                                            <span class="rightFloat">
-                                                                                {% if penalty.deleted %}
-                                                                                    <button type="button" name="act" class="btn" title="Slettet straff" value="" />
-                                                                                    <span class="glyphicon glyphicon-ban-circle"></span>Slettet</button>
-                                                                                {% else %}
-                                                                                    <button type="submit" name="act" class="btn btn-danger" title="Slett" value="delete {{ penalty.pk }}">
-                                                                                    <span class="glyphicon glyphicon-ban-circle"></span>Slett</button>
-                                                                                {% endif %}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                {% endifequal %}
-                                                            {% endifequal %}
-                                                        {% endfor %}
-                                                        <div class="row noMargin">
-                                                            <hr />
-                                                            <div class="moreCell">
-                                                                {% if showDeleted %}
-                                                                    <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="" />
-                                                                    <span class="glyphicon glyphicon-eye-close"></span>Skjul Slettede</button>
-                                                                {% else %}
-                                                                    <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="showhidden {{ member.id }}">
-                                                                    <span class="glyphicon glyphicon-trash"></span>Vis Slettede</button>
-                                                                {% endif %}     
-                                                                <button type="submit" name="act" class="btn permabutton" title="Annuler alle penalties" value="nuke {{ member.id }}">
-                                                                <span class="glyphicon glyphicon-fire"></span> Slett Alle</button>
                                                             </div>
-                                                        </div>
-                                                    </div> 
-                                                </div>
+                                                            {% for penalty in member.penalties.all %}
+                                                                {% ifequal penalty.committee currCom.name %}
+                                                                    {% ifequal penalty.deleted showDeleted %}
+                                                                        <div class="row noMargin">
+                                                                            <hr />
+                                                                            <div class="col-md-6">
+                                                                                <blockquote>
+                                                                                    <p class="breakword">
+                                                                                        {{ penalty.reason }}
+                                                                                    </p> 
+                                                                                    <small>
+                                                                                        Gitt av <a href="/profile/{{penalty.giver.username}}/">
+                                                                                            <cite title="Brukerprofil">
+                                                                                                {{ penalty.giver }}
+                                                                                            </cite>
+                                                                                        </a>
+                                                                                    </small>
+                                                                                </blockquote>
+                                                                            </div>
+                                                                            <div title="{{ penalty.amount }} {% ifequal penalty.amount 1 %}{{ penalty.item_name }}straff{% else %}{{ penalty.item_name }}straffer{% endifequal %}" class="col-sm-2 nameCell center noLeftPadd">
+                                                                                {% for vin in penalty.amount|get_range %}
+                                                                                    <img src="/static/img/{{ penalty.item }}.png" alt="{{ penalty.item }}" class="{{ penalty.item }}">
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                            <div title="Vinstraff gitt {{ penalty.date | date:'d M Y H:i' }}" class="col-sm-2 nameCell minCell">
+                                                                                {{ penalty.date | date:"d M Y H:i" }}
+                                                                            </div>
+                                                                            <div class="col-sm-2">
+                                                                                <span class="rightFloat">
+                                                                                    {% if penalty.deleted %}
+                                                                                        <button type="button" name="act" class="btn" title="Slettet straff" value="" />
+                                                                                        <span class="glyphicon glyphicon-ban-circle"></span>Slettet</button>
+                                                                                    {% else %}
+                                                                                        <button type="submit" name="act" class="btn btn-danger" title="Slett" value="delete {{ penalty.pk }}">
+                                                                                        <span class="glyphicon glyphicon-ban-circle"></span>Slett</button>
+                                                                                    {% endif %}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    {% endifequal %}
+                                                                {% endifequal %}
+                                                            {% endfor %}
+                                                            <div class="row noMargin">
+                                                                <hr />
+                                                                <div class="moreCell">
+                                                                    {% if showDeleted %}
+                                                                        <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="" />
+                                                                        <span class="glyphicon glyphicon-eye-close"></span>Skjul Slettede</button>
+                                                                    {% else %}
+                                                                        <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="showhidden {{ member.id }}">
+                                                                        <span class="glyphicon glyphicon-trash"></span>Vis Slettede</button>
+                                                                    {% endif %}     
+                                                                    <button type="submit" name="act" class="btn permabutton" title="Annuler alle penalties" value="nuke {{ member.id }}">
+                                                                    <span class="glyphicon glyphicon-fire"></span> Slett Alle</button>
+                                                                </div>
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                                </form>
                                             </td>
                                         </tr>
                                     {% endfor %}
