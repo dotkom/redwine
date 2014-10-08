@@ -103,7 +103,7 @@ blockquote{
 #select-control {
     display: inline-block;
     width: 37px !important;
-    padding: 6px 3px;
+    padding: 6px 2px;
 }
 
 .auto {width: auto !important;}
