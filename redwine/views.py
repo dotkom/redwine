@@ -20,7 +20,7 @@ def redwine_home(request):
     try:
         return redwine_com(request, request.user.groups.filter(pk__in=settings.USER_SEARCH_GROUPS)[0])
     except(IndexError):
-        return render(request, 'redwine/index.html', { "error":True, "errorMessage":"You have no active redwine committees!"})
+        return render(request, 'index.html', { "error":True, "errorMessage":"You have no active redwine committees!"})
 
 def redwine_com(request, committee):
     User = get_user_model()
@@ -31,7 +31,7 @@ def redwine_com(request, committee):
     try:
         kom = request.user.groups.filter(name=committee)[:1].get();
     except:                                                             #TODO: handle exception better!
-        return render(request, 'redwine/index.html', { 
+        return render(request, 'index.html', { 
             "error":True, 
             "errorMessage":"You don't have access to this committee. If you think you should, please contact a sysadmin."
             })
@@ -58,7 +58,7 @@ def redwine_com(request, committee):
                 s.save()
                 editedUser=int(form.data['to'])
             else:
-                return render(request, 'redwine/index.html', { "error":True, "errorMessage":"The reason must be between 1 and 100 chars."})
+                return render(request, 'index.html', { "error":True, "errorMessage":"The reason must be between 1 and 100 chars."})
                 
         elif 'delete' in act: 
             #filter for koms
@@ -93,7 +93,7 @@ def redwine_com(request, committee):
         else:
             committees[com] = (0,0)
 
-    return render(request, 'redwine/index.html', {  
+    return render(request, 'index.html', {  
         'committees'   : committees,
         'currCom'      : kom,
         'submittedNew' : submitted,
