@@ -12,23 +12,21 @@
 
 {% block content %}
 
-<nav class="subnavbar navbar-default navbar-fixed-top">
+<nav class="subnavbar">
     <div class="container">
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
-                {%for kom, users in committees.items %}
-                    {%ifequal currCom kom %}
-                        <li class="top-menu-link active">
-                            <a class="active" href="/redwine/{{kom}}">{{ kom }}</a>
-                        </li>
-                    {%else%}
-                        <li class="top-menu-link">
-                            <a class="" href="/redwine/{{kom}}">{{ kom }}</a>
-                        </li>
-                    {%endifequal%}
-                {% endfor %}
+        <ul>
+            {%for kom, users in committees.items %}
+                {%ifequal currCom kom %}
+                    <li class="top-menu-link active">
+                        <a class="active" href="/redwine/{{kom}}">{{ kom }}</a>
+                    </li>
+                {%else%}
+                    <li class="top-menu-link">
+                        <a class="" href="/redwine/{{kom}}">{{ kom }}</a>
+                    </li>
+                {%endifequal%}
+            {% endfor %}
         </ul>
-    </div>
 </div>
 </nav>
 
@@ -63,13 +61,15 @@
                 <td title="{{ tot }} {% ifequal tot 1 %}straff{%else%}straffer{%endifequal%}"
                 class="col-sm-2 nameCell total">
                     {% for penalty in member.penalties.all %}
-                        {% for penalties in penalty.amount|get_range %}
-                            <img src="/static/img/{{penalty.item}}.png" alt="{{penalty.item_name}}" class="{{penalty.item}}">
-                        {% endfor %}
+                        {% if penalty.deleted %}{%else%}
+                            {% for penalties in penalty.amount|get_range %}
+                                <img src="/static/img/{{penalty.item}}.png" alt="{{penalty.item_name}}" class="{{penalty.item}}">
+                            {% endfor %}
+                        {%endif%}
                     {% endfor %}
                 </td>
                 <td class="nameCell">{{ member.penalties.latest.date | date:"d M Y H:i" }}</td>
-                <td><a href="#"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
+                <td><span class="glyphicon glyphicon-chevron-down"></span></td>
             </tr>
             <tr>
         <td colspan="4" class="hiddenRow">
