@@ -62,9 +62,11 @@
                 class="col-sm-2 nameCell total">
                     {% for penalty in member.penalties.all %}
                         {% if penalty.deleted %}{%else%}
-                            {% for penalties in penalty.amount|get_range %}
-                                <img src="/static/img/{{penalty.item}}.png" alt="{{penalty.item_name}}" class="{{penalty.item}}">
-                            {% endfor %}
+                            {% ifequal penalty.committee currCom.name %}
+                                {% for penalties in penalty.amount|get_range %}
+                                    <img src="/static/img/{{penalty.item}}.png" alt="{{penalty.item_name}}" class="{{penalty.item}}">
+                                {% endfor %}
+                            {% endif %}
                         {%endif%}
                     {% endfor %}
                 </td>
