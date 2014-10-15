@@ -42,13 +42,13 @@
         <h2>{{kom}} - Vinstraffer</h2>
         </div>
         <div class="page-header" id="accordion">
-          <table class="table searchtable">
+          <table class="table searchtable" id="maintable">
            <thead>
               <tr class="center">
-                  <td class="left col-md-6"><strong>Navn</strong></td>
-                  <td class="col-sm-2"><strong>Antall</strong></td>
-                  <td><strong>Sist straffet</strong></td>
-                  <td></td>
+                  <th class="left col-md-6"><strong>Navn</strong></th>
+                  <th class="col-sm-2 center headerSortDown"><strong>Antall</strong></th>
+                  <th class="center"><strong>Sist straffet</strong></th>
+                  <th></th>
               </tr>
             </thead>
             <tbody>
@@ -182,8 +182,10 @@
 {% block js %}
 {{ block.super }}
 <script src="{{ STATIC_URL }}js/jquery.filtertable.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.tablesorter.min.js"></script> 
 <script>
 $(document).ready(function() {
+        $("#maintable").tablesorter(); 
         $('table').filterTable({
           inputSelector:"#search"
         });
