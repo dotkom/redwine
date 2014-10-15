@@ -52,7 +52,7 @@
               </tr>
             </thead>
             <tbody>
-            {%for member, tot in users %}
+            {%for member, tot, by_kom in users %}
             <tr data-toggle="collapse" data-target="#{{kom.id}}_{{member.id}}" data-parent="#accordion" class="accordion-toggle center clickable">
                 <td class="nameCell left col-md-6 listname">
                 <a href="/profile/{{member.username}}/" class="glyphicon glyphicon-user frontIcons"></a>
@@ -70,7 +70,7 @@
                         {%endif%}
                     {% endfor %}
                 </td>
-                <td class="nameCell">{{ member.penalties.latest.date | date:"d M Y H:i" }}</td>
+                <td class="nameCell">{{ by_kom.latest.date | date:"d M Y H:i" }}</td>
                 <td><span class="glyphicon glyphicon-chevron-down"></span></td>
             </tr>
             <tr>

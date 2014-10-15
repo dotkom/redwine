@@ -87,12 +87,14 @@ def redwine_com(request, committee):
 
     committees = {} #move total into loop if multiple coms in one page
     total = lambda user: sum([penalty.amount for penalty in user.penalties.filter(deleted=False, committee=com)])
+    by_kom= lambda user: user.penalties.filter(deleted=False, committee=com)
     for com in request.user.groups.filter(pk__in=settings.USER_SEARCH_GROUPS):
         if com==kom:
-            committees[com] = [(user, total(user)) for user in com.user_set.all()] 
+            
+            committees[com] = [(user, total(user), by_kom(user)) for user in com.user_set.all()] 
             committees[com].sort(key=itemgetter(1),reverse=True)
         else:
-            committees[com] = (0,0)
+            committees[com] = (0,0,0)
 
     return render(request, 'index.html', {  
         'committees'   : committees,
