@@ -11,4 +11,4 @@ class newPenaltyForm(forms.ModelForm):
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Penalty
-        fields = [reason, amount, giver, to]
+        fields = []
