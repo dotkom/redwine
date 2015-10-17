@@ -2,6 +2,6 @@ rm dist/redwine*
 python setup.py sdist
 cd ../online
 pip uninstall redwine -y
-pip install ../redwine/dist/redwine-1.2.1.tar.gz
+pip install ../redwine/dist/redwine-1.2.0.tar.gz
 python manage.py runserver 0.0.0.0:8080
 
