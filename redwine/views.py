@@ -111,13 +111,12 @@ def total_unflitered(user):
     return sum([penalty.amount for penalty in user.penalties.all()])
 
 
-def redwine_top(request, committee):
+def redwine_top(request):
     User = get_user_model()
-    showDeleted = True
 
     # check if in com
     try:
-        kom = request.user.groups.filter(name=committee)[:1].get()
+        kom = request.user.groups.filter(pk__in=settings.USER_SEARCH_GROUPS)[:1].get()
     except:                                                             #TODO: handle exception better!
         return render(request, 'redwine/index.html', { 
             "error": True, 
@@ -134,19 +133,16 @@ def redwine_top(request, committee):
     for penalty in Penalty.objects.all():
         username = penalty.to.username
         if username not in top:
-            top[username] = (penalty.to, penalty.amount, [penalty])
+            top[username] = [penalty.to, penalty.amount, [penalty]]
         else:
             top[username][1] += penalty.amount
             top[username][2].append(penalty)
 
-    top.sort(key=itemgetter(1), reverse=True)
+    print top
+    # top.sort(key=itemgetter(1), reverse=True)
 
-    return render(request, 'redwine/index.html', {  
+    return render(request, 'redwine/top.html', {  
         'committees'   : committees,
         'currCom'      : kom,
-        'submittedNew' : submitted,
-        'showDeleted'  : showDeleted,
-        'editedUser'   : editedUser,
-        'ownDelete'    : ownDelete,
-        #'form' : form,
+        'top'          : top,
         })

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} {{currCom}} - RedWine {% endblock title %}
+{% block title %}Wall of Shame - RedWine {% endblock title %}
 {% load filters %}
 {% block styles %}
 {{ block.super }}
@@ -11,17 +11,17 @@
     <div class="container">
         <!--<div id="nyan" class="nyan"></div>-->
         <div class="row">
-            {%for kom, users in committees.items %}
-            {%ifequal currCom kom %} 
+            
             <div class="col-md-12">
                 <div class="page-header">
                     <input type="search" class="search" placeholder="Søk" name="search" id="search">
-                    <h2>{{kom}} - Vinstraffer</h2>
+                    <h2>Wall of Shame</h2>
                 </div>
                 <div class="page-header" id="accordion">
                     <table class="table searchtable" id="maintable">
                         <thead>
                             <tr class="center">
+                                <th class="left"><strong>#</strong></th>
                                 <th class="left col-md-6"><strong>Navn</strong></th>
                                 <th class="col-sm-2 center headerSortDown"><strong>Antall</strong></th>
                                 <th class="center"><strong>Sist straffet</strong></th>
@@ -29,8 +29,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {%for member, tot, by_kom in users %}
-                            <tr data-toggle="collapse" data-target="#{{kom.id}}_{{member.id}}" data-parent="#accordion" class="accordion-toggle center clickable">
+                            {%for key, data in top.items %}
+                            {% with member=data.0 tot=data.1 by_kom=data.2 %}
+                            <tr data-toggle="collapse" data-target="#{{member.id}}" data-parent="#accordion" class="accordion-toggle center clickable">
+                                <td class="left">{{ forloop.counter }}</td>
                                 <td class="nameCell left col-md-6 listname">
                                     <a href="/profile/{{member.username}}/" class="glyphicon glyphicon-user frontIcons"></a>
                                     {{ member.get_full_name }}
@@ -38,13 +40,9 @@
                                 <td title="{{ tot }} {% ifequal tot 1 %}straff{%else%}straffer{%endifequal%}"
                                     class="col-sm-2 nameCell total">
                                     {% for penalty in member.penalties.all %}
-                                        {% if penalty.deleted %}{%else%}
-                                            {% ifequal penalty.committee currCom.name %}
-                                            {% for penalties in penalty.amount|get_range %}
-                                            <img src="/static/img/{{penalty.item}}.png" alt="{{penalty.item_name}}" class="{{penalty.item}}">
-                                            {% endfor %}
-                                            {% endifequal %}
-                                        {%endif%}
+                                        {% for penalties in penalty.amount|get_range %}
+                                        <img src="/static/img/{{penalty.item}}.png" alt="{{penalty.item_name}}" class="{{penalty.item}}">
+                                        {% endfor %}
                                     {% endfor %}
                                 </td>
                                 <td class="nameCell">{{ by_kom.latest.date | date:"d M Y H:i" }}</td>
@@ -52,38 +50,8 @@
                             </tr>
                             <tr>
                                 <td colspan="4" class="hiddenRow">
-                                    <div class="accordian-body collapse elementInfo {% ifequal member.id editedUser %}in{% endifequal %}" id="{{kom.id}}_{{member.id}}">
-                                        <div class="row noMargin">
-                                            <div class="newCol">
-                                                <form class="form-inline addNew" role="form" action="." method="post">
-                                                    {% csrf_token %}
-                                                    {{ form.non_field_errors }}
-                                                    <div class="form-group">
-                                                        <div class="col-xs-10">
-                                                            <label class="sr-only" for="exampleInputEmail2">Ny Vinstraff</label>
-                                                            {{ form.reason.errors }}
-                                                            <input type="text" maxlength="100" class="form-control" id="id_reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
-                                                        </div>
-                                                        <div class="addBox col-xs-1">
-                                                            {{ form.amount.errors }}
-                                                            <select id="select-control" class="form-control" id="type" name="type" style="width: auto !important;">
-                                                                <option value="wine.vin">Vin</option>
-                                                                <option value="beer.øl">Øl</option>
-                                                            </select>
-                                                            <select id="select-control" class="form-control" id="amount" name="amount">
-                                                            {% for num in "123456789"%}<option{%ifequal num wineString %} nosel {% endifequal %}>{{ num }}</option>{%endfor%}
-                                                            </select>
-                                                            <input id="id_to" name="to" type="hidden" value="{{ member.id }}">
-                                                            <input id="committee" name="committee" type="hidden" value="{{ kom }}">
-                                                            <button type="submit" name="act" class="btn btn-success" title="Ny Vinstraff" value="add">
-                                                            <span class="glyphicon glyphicon-plus"></span> Ny</button>
-                                                        </div>
-                                                    </div>
-                                            </div>
-                                        </div>
+                                    <div class="accordian-body collapse elementInfo" id="{{member.id}}">
                                         {%for penalty in member.penalties.all %}
-                                        {% ifequal penalty.committee currCom.name %}
-                                        {% ifequal penalty.deleted showDeleted %}
                                         <div class="row noMargin">
                                             <hr>
                                             <div class="col-md-6">
@@ -108,43 +76,21 @@
                                                         Slettet
                                                     </button>
                                                     {% else %}
-                                                    <button type="submit" name="act" class="btn btn-danger" title="Slett" value="delete {{ penalty.pk }}">
-                                                        <span class="glyphicon glyphicon-ban-circle"></span> 
-                                                        Slett
-                                                    </button>
                                                     {% endif %}
                                                 </span>
                                             </div>
                                         </div>
-                                        {% endifequal %}
-                                        {% endifequal %}
                                         {% endfor %}
-                                        <div class="row noMargin">
-                                            <hr>
-                                            <div class="moreCell">
-                                                {%if showDeleted %}
-                                                <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="">
-                                                <span class="glyphicon glyphicon-eye-close"></span> Skjul Slettede</button>
-                                                {% else %}
-                                                <button type="submit" name="act" class="btn btn-warning" title="Vis Slettede Straffer" value="showhidden {{ member.id }}">
-                                                <span class="glyphicon glyphicon-trash"></span> Vis Slettede</button>
-                                                {% endif %}     
-                                                <button type="submit" name="act" class="btn permabutton" title="Annuler alle penalties" value="nuke {{ member.id }}">
-                                                <span class="glyphicon glyphicon-fire"></span> Slett Alle</button>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                    {% endwith %}
                 {%endfor%}
                 </tbody>
             </table>
         </div>
         </div>
-        {% endifequal %}
-        {% endfor %}
         {% if error %}
         <div class="page-header">Error: {{errorMessage}}</div>
         {% endif %}
@@ -161,9 +107,6 @@
             $('table').filterTable({
               inputSelector:"#search"
             });
-            {%if ownDelete %}
-            //$(document.getElementById("nyan")).toggleClass( "goNyan" );
-            {% endif %}
         });
 </script>
 {% endblock %}

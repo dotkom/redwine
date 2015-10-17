@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from redwine.views import redwine_home, redwine_com
+from redwine.views import redwine_home, redwine_com, redwine_top
 from django.contrib import admin
 admin.autodiscover()
 
