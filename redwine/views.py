@@ -138,8 +138,10 @@ def redwine_top(request):
             top[username][1] += penalty.amount
             top[username][2].append(penalty)
 
-    print top
-    # top.sort(key=itemgetter(1), reverse=True)
+    top = top.values()
+    top.sort(key=itemgetter(1), reverse=True)
+    if len(top) > 20:
+        top = top[:20]
 
     return render(request, 'redwine/top.html', {  
         'committees'   : committees,
