@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 #from django.contrib.auth import get_user_model
 
+
 class Penalty(models.Model):
     
     to =        models.ForeignKey(settings.AUTH_USER_MODEL, related_name='penalties')
@@ -15,8 +16,10 @@ class Penalty(models.Model):
     deleted =   models.BooleanField(default=False)
     item =      models.CharField(default="wine", max_length=30)
     item_name = models.CharField(default="vin", max_length=30)
+
     def __unicode__(self):
         return u'%s - %s' % (self.amount, self.to)
+
     class Meta:
         ordering = ['-date']
         get_latest_by = 'date'

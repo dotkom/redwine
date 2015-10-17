@@ -1,0 +1,27 @@
+<nav class="subnavbar">
+    <div class="container">
+        <ul>
+            {%for kom, users in committees.items %}
+                {%ifequal currCom kom %}
+                    <li class="top-menu-link active">
+                        <a class="active" href="/redwine/{{kom}}">{{ kom }}</a>
+                    </li>
+                {%else%}
+                    <li class="top-menu-link">
+                        <a class="" href="/redwine/{{kom}}">{{ kom }}</a>
+                    </li>
+                {%endifequal%}
+            {% endfor %}
+            {%if top %}
+                <li class="top-menu-link active">
+                    <a class="active" href="/redwine/top"></a>
+                </li>
+            {%else%}
+                <li class="top-menu-link">
+                    <a class="" href="/redwine/top"></a>
+                </li>
+            {%endifequal%}
+            
+        </ul>
+    </div>
+</nav>

@@ -4,6 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^top/$', redwine_top),
 	url(r'^(\w+)/$', redwine_com),
 	url(r'^$', redwine_home),
     (r'^admin/', include(admin.site.urls)),
