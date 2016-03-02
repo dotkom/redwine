@@ -62,7 +62,7 @@
                                                         <div class="col-xs-10">
                                                             <label class="sr-only" for="exampleInputEmail2">Ny Vinstraff</label>
                                                             {{ form.reason.errors }}
-                                                            <input type="text" maxlength="100" class="form-control" id="id_reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
+                                                            <input type="text"  pattern=".{1,100}" class="form-control" id="id_reason" name="reason" placeholder="Begrunnelse på ny vinstraff">
                                                         </div>
                                                         <div class="addBox col-xs-1">
                                                             {{ form.amount.errors }}

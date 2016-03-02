@@ -42,16 +42,16 @@ def redwine_com(request, committee):
         if act =='add':
             if int(form.data['amount'])<=10 and 1<len(form.data['reason'])<=100:
                 #todo: sjekk at man gir til samme komite
-                item=str(form.data['type'].encode('utf8')).split(".")
+                item=form.data['type'].split(".")
                 if len(item)<1:
                     return
 
                 s=Penalty(
                     giver=     request.user,
-                    committee= str(form.data['committee'].encode('utf8')),
+                    committee= form.data['committee'],
                     to=        User.objects.get(pk=(int(form.data['to']))),
                     amount=    int(form.data['amount']),
-                    reason=    str(form.data['reason'].encode('utf8')),
+                    reason=    form.data['reason'],
                     item=      item[0],
                     item_name= item[1]
                     )
@@ -132,13 +132,14 @@ def redwine_top(request):
     top = {}
     for penalty in Penalty.objects.all():
         username = penalty.to.username
-        if username not in top:
-            top[username] = [penalty.to, penalty.amount, [penalty]]
-        else:
-            top[username][1] += penalty.amount
-            top[username][2].append(penalty)
+        if penalty.amount < 9:  # dont count "fake" penalties
+            if username not in top:
+                top[username] = [penalty.to, penalty.amount, [penalty]]
+            else:
+                top[username][1] += penalty.amount
+                top[username][2].append(penalty)
 
-    top = top.values()
+    top = list(top.values())
     top.sort(key=itemgetter(1), reverse=True)
     if len(top) > 20:
         top = top[:20]

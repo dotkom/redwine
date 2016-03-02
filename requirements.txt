@@ -1,3 +1,1 @@
-Django==1.7
-South==0.7.5                    # DB migration tool
-django-grappelli==2.4.5         # Admin template set
+Django==1.9
