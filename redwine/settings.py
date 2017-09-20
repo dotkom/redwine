@@ -4,7 +4,6 @@ import os
 PROJECT_SETTINGS_DIRECTORY = os.path.dirname(globals()['__file__'])
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Nixo', 'me@nixo.no'),
@@ -91,13 +90,6 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '=r$s2s47%aa-@2d8_0x6ahb0wa3al8y!a67y^^ib8-b4r^*)m3'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
-)
-
 AUTH_PROFILE_MODULE = 'redwine.UserProfile'
 
 
@@ -116,9 +108,23 @@ ROOT_URLCONF = 'redwine.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'redwine.wsgi.application'
 
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_SETTINGS_DIRECTORY, 'templates/')
- )
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': os.path.join(PROJECT_SETTINGS_DIRECTORY, 'templates/'),
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.static',
+            ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader'
+            ]
+        }
+    }
+]
 
 INSTALLED_APPS = (
     'django.contrib.auth',
