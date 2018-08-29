@@ -9,14 +9,18 @@ Quick start
 
 1. Add "redwine" to your INSTALLED_APPS setting like this::
 
-    INSTALLED_APPS = (
-        ...
-        'redwine',
-    )
+```python
+INSTALLED_APPS = (
+    ...
+    'redwine',
+)
+```
 
 2. Include the redWine URLconf in your project urls.py like this::
 
-    url(r'^redwine/', include('redwine.urls')),
+```python
+url(r'^redwine/', include('redwine.urls')),
+```
 
 3. Run `python manage.py migrate` to create the redWine models.
 
