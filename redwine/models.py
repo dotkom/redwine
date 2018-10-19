@@ -7,8 +7,8 @@ from django.db.models.signals import post_save
 
 class Penalty(models.Model):
     
-    to =        models.ForeignKey(settings.AUTH_USER_MODEL, related_name='penalties')
-    giver =     models.ForeignKey(settings.AUTH_USER_MODEL, related_name='penaltygiver')
+    to =        models.ForeignKey(settings.AUTH_USER_MODEL, related_name='penalties', on_delete=models.CASCADE)
+    giver =     models.ForeignKey(settings.AUTH_USER_MODEL, related_name='penaltygiver', on_delete=models.CASCADE)
     amount =    models.PositiveIntegerField()
     committee = models.CharField(max_length=60)
     reason =    models.CharField(max_length=100)
