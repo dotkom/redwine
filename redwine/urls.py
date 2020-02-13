@@ -5,7 +5,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^top/$', redwine_top),
-    url(r'^(\w+)/$', redwine_com),
+    url(r'^([\w-]+)/$', redwine_com),
     url(r'^$', redwine_home),
     url(r'^admin/', admin.site.urls),
     # (r'accounts/login/',include(admin.site.urls)),
