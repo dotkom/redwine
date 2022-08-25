@@ -27,6 +27,7 @@
 .wine{
     content: url(../img/wine.png);
     height: 30px;
+    max-width: 18px;
 }
 .beer{
     content: url(../img/beer.png); /*todo: make*/
