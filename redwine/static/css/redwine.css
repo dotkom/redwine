@@ -26,8 +26,8 @@
 
 .wine{
     content: url(../img/wine.png);
-    height: 30px;
-    max-width: 18px;
+    display: inline-block;
+    height: 40px;
 }
 .beer{
     content: url(../img/beer.png); /*todo: make*/
@@ -245,9 +245,6 @@ blockquote p {
     font-size: 90%;
   }
 
-.wine{
-    height: 20px;
-}
 .col-sm-2{
    font-size: 90%;
   vertical-align: top;
