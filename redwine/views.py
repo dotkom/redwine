@@ -13,6 +13,7 @@ from django.db.models import Q
 from .models import Penalty
 from .forms import newPenaltyForm
 from django.contrib.auth import get_user_model
+from django.db.models import Prefetch
 
 
 @login_required
@@ -129,8 +130,13 @@ def redwine_top(request):
     for com in request.user.groups.filter(pk__in=settings.USER_SEARCH_GROUPS):
         committees[com] = (0, 0, 0)
 
+    penalties = Penalty.objects.filter(amount__lt=9).prefetch_related(
+        Prefetch('to', queryset=User.objects.all()),
+        Prefetch('giver', queryset=User.objects.all()),
+    )
+
     top = {}
-    for penalty in Penalty.objects.all():
+    for penalty in penalties:
         username = penalty.to.username
         if penalty.amount < 9:  # dont count "fake" penalties
             if username not in top:
