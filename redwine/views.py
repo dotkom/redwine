@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime, re
+import pytz
 from operator import itemgetter
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -42,6 +43,26 @@ def redwine_com(request, committee):
         form = newPenaltyForm(data=request.POST)
         if act =='add':
             if int(form.data['amount'])<=10 and 1<len(form.data['reason'])<=100:
+                
+                # liten artificial block for redwines største misbrukere
+                if form.data['committee'] in ("velKom",):
+                    giver = int(request.user.id)
+                    curfew_map = {
+                        2595: "Fredrik",
+                        2596: "Pelle",
+                    }
+
+                    oslo_timezone = pytz.timezone('Europe/Oslo')
+                    current_time_oslo = datetime.datetime.now(oslo_timezone)
+
+                    start_time = current_time_oslo.replace(hour=20, minute=0, second=0, microsecond=0)
+                    end_time = current_time_oslo.replace(hour=8, minute=0, second=0, microsecond=0)
+
+                    if start_time <= current_time_oslo or current_time_oslo < end_time and giver in curfew_map:
+                        return render(request, 'redwine/index.html', { "error":True, "errorMessage":"Leggetid for deg nå {0}".format(
+                            curfew_map[giver]
+                        )})
+
                 #todo: sjekk at man gir til samme komite
                 item=form.data['type'].split(".")
                 if len(item)<1:
