@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import datetime, re
-import pytz
 from operator import itemgetter
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -15,6 +14,7 @@ from .models import Penalty
 from .forms import newPenaltyForm
 from django.contrib.auth import get_user_model
 from django.db.models import Prefetch
+from zoneinfo import ZoneInfo
 
 
 @login_required
@@ -52,7 +52,7 @@ def redwine_com(request, committee):
                         2596: "Pelle",
                     }
 
-                    oslo_timezone = pytz.timezone('Europe/Oslo')
+                    oslo_timezone = ZoneInfo('Europe/Oslo')
                     current_time_oslo = datetime.datetime.now(oslo_timezone)
 
                     start_time = current_time_oslo.replace(hour=20, minute=0, second=0, microsecond=0)
