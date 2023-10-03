@@ -58,7 +58,7 @@ def redwine_com(request, committee):
                     start_time = current_time_oslo.replace(hour=20, minute=0, second=0, microsecond=0)
                     end_time = current_time_oslo.replace(hour=8, minute=0, second=0, microsecond=0)
 
-                    if start_time <= current_time_oslo or current_time_oslo < end_time and giver in curfew_map:
+                    if (start_time <= current_time_oslo or current_time_oslo < end_time) and giver in curfew_map:
                         return render(request, 'redwine/index.html', { "error":True, "errorMessage":"Leggetid for deg nå {0}".format(
                             curfew_map[giver]
                         )})
